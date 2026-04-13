@@ -648,7 +648,7 @@ export const ChatProvider = ({ children, currentUser }) => {
         setIsSharer(false);
         setIsScreenShareDialogOpen(true);
         setSharingWithId(senderId);
-        candidatesQueue.current = []; // Clear queue before joining
+        // DO NOT clear candidatesQueue.current here, doing so discards all pre-queued ICE candidates
         
         console.log("[MS-6] Initializing PeerConnection for receiver side...");
         const pc = createPeerConnection(senderId);
@@ -852,7 +852,7 @@ export const ChatProvider = ({ children, currentUser }) => {
       setIsVideoCallIncoming(false);
       setIsAudioCallIncoming(false);
       setCallStatus('connecting');
-      callCandidatesQueue.current = [];
+      // callCandidatesQueue.current = []; // Do NOT clear here, as ICE candidates collected during ringing would be lost
       const pc = createCallPeerConnection(senderId, type);
       stream.getTracks().forEach(t => pc.addTrack(t, stream));
       await pc.setRemoteDescription(new RTCSessionDescription(offer));

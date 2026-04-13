@@ -233,6 +233,37 @@ io.on('connection', (socket) => {
     io.to(receiverId).emit('screenshare_stop', data);
   });
 
+  // ─── Video / Audio Call Signaling ──────────────────────────────────────────
+  socket.on('call_offer', (data) => {
+    const receiverId = String(data.receiverId || '');
+    console.log(`[CALL] call_offer from ${data.senderId} to ${receiverId} (type: ${data.callType})`);
+    io.to(receiverId).emit('call_offer', data);
+  });
+
+  socket.on('call_answer', (data) => {
+    const receiverId = String(data.receiverId || '');
+    console.log(`[CALL] call_answer from ${data.senderId} to ${receiverId}`);
+    io.to(receiverId).emit('call_answer', data);
+  });
+
+  socket.on('call_candidate', (data) => {
+    const receiverId = String(data.receiverId || '');
+    io.to(receiverId).emit('call_candidate', data);
+  });
+
+  socket.on('call_end', (data) => {
+    const receiverId = String(data.receiverId || '');
+    console.log(`[CALL] call_end from ${data.senderId} to ${receiverId}`);
+    io.to(receiverId).emit('call_end', data);
+  });
+
+  socket.on('call_rejected', (data) => {
+    const receiverId = String(data.receiverId || '');
+    console.log(`[CALL] call_rejected from ${data.senderId} to ${receiverId}`);
+    io.to(receiverId).emit('call_rejected', data);
+  });
+  // ───────────────────────────────────────────────────────────────────────────
+
   socket.on('disconnect', async () => {
     const userId = socket.userId;
     console.log(`User ${userId} disconnected`);

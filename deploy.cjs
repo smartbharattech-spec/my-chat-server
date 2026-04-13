@@ -24,6 +24,8 @@ async function deploy() {
         await client.uploadFrom("api/courses.php", "/public_html/api/courses.php");
         await client.uploadFrom("api/marketplace/chat_get_conversations.php", "/public_html/api/marketplace/chat_get_conversations.php");
         await client.uploadFrom("api/marketplace/chat_send_message.php", "/public_html/api/marketplace/chat_send_message.php");
+        await client.uploadFrom("api/marketplace/auth_register_expert.php", "/public_html/api/marketplace/auth_register_expert.php");
+        await client.uploadFrom("api/migrate_chat_v3.php", "/public_html/api/migrate_chat_v3.php");
         
         console.log("Upload completed!");
     } catch(err) {

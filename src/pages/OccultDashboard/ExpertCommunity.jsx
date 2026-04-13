@@ -12,6 +12,7 @@ import {
 import MarketplaceSidebar from '../../components/MarketplaceSidebar';
 import BlockingOverlay from '../../components/BlockingOverlay';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useChat } from '../../contexts/ChatContext';
 import './ExpertCommunity.css';
 
 const UserAvatar = ({ src, name, size = 48, className = "" }) => {
@@ -55,6 +56,7 @@ const UserAvatar = ({ src, name, size = 48, className = "" }) => {
 export default function ExpertCommunity() {
     const navigate = useNavigate();
     const location = useLocation();
+    const { setIsChatOpen, conversations, setActiveConversation } = useChat();
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState('feed');
@@ -410,15 +412,35 @@ export default function ExpertCommunity() {
                     </div>
                 </header>
 
-                <div className="community-tabs">
-                    <div className={`tab-item ${activeTab === 'feed' ? 'active' : ''}`} onClick={() => setActiveTab('feed')}>
-                        <TrendingUp size={18} /> Explore Feed
-                    </div>
-                    {user?.role === 'expert' && (
-                        <div className={`tab-item ${activeTab === 'settings' ? 'active' : ''}`} onClick={() => setActiveTab('settings')}>
-                            <SettingsIcon size={18} /> Feed Settings
+                <div className="community-tabs" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', gap: '1rem' }}>
+                        <div className={`tab-item ${activeTab === 'feed' ? 'active' : ''}`} onClick={() => setActiveTab('feed')}>
+                            <TrendingUp size={18} /> Explore Feed
                         </div>
-                    )}
+                        {user?.role === 'expert' && (
+                            <div className={`tab-item ${activeTab === 'settings' ? 'active' : ''}`} onClick={() => setActiveTab('settings')}>
+                                <SettingsIcon size={18} /> Feed Settings
+                            </div>
+                        )}
+                    </div>
+                    {/* NEW: Explicit Chat Button so they know where to find the Broadcast Group */}
+                    <button 
+                        className="premium-btn-primary" 
+                        onClick={() => {
+                            // Find the first broadcast conversation and open it directly
+                            if (conversations && conversations.length > 0) {
+                                const groupChat = conversations.find(c => c.type === 'broadcast');
+                                if (groupChat) {
+                                    setActiveConversation(groupChat);
+                                }
+                            }
+                            setIsChatOpen(true);
+                        }}
+                        style={{ padding: '0.5rem 1rem', fontSize: '0.9rem', display: 'flex', gap: '0.5rem', alignItems: 'center' }}
+                    >
+                        <MessageSquare size={16} />
+                        Open Group Chat
+                    </button>
                 </div>
 
                 {joiningExpert ? (

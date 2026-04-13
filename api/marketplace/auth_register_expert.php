@@ -122,6 +122,11 @@ try {
     }
     // --- END VASTU TOOL SYNC ---
 
+    // Create Broadcast Room for this new expert automatically
+    $roomTitle = $name . "'s Community";
+    $stmtBroadcast = $pdo->prepare("INSERT INTO chat_conversations (type, expert_id, user_id, title, last_message) VALUES ('broadcast', ?, NULL, ?, 'Welcome to the community group!')");
+    $stmtBroadcast->execute([$userId, $roomTitle]);
+
     $pdo->commit();
     echo json_encode(['status' => 'success', 'message' => 'Expert registration successful! You can now log in and access your dashboard.']);
 
