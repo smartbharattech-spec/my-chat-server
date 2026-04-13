@@ -1,0 +1,231 @@
+import React, { useState, useEffect } from 'react';
+import { useExclusion } from '../../services/tool/exclusionService';
+import { useDevta } from '../../services/tool/devtaService';
+import { useShaktiChakra } from '../../services/tool/shaktiChakraService';
+import { getBoundaryIntersection } from '../../services/tool/drawingService';
+
+/**
+ * 🕉️ VASTU UNIFIED MANDALA (Marma & 4 Devtas)
+ * Fixed: All 4 Devta names now show correctly on boundaries.
+ */
+
+const FOUR_INNER_DEVTAS = [
+    { id: "north", name: "Bhudhar", startAngle: 315, endAngle: 45, color: "rgba(74, 222, 128, 0.4)", textColor: "#065f46" },
+    { id: "east", name: "Aryama", startAngle: 45, endAngle: 135, color: "rgba(96, 165, 250, 0.4)", textColor: "#1e3a8a" },
+    { id: "south", name: "Vivasvan", startAngle: 135, endAngle: 225, color: "rgba(251, 146, 60, 0.4)", textColor: "#7c2d12" },
+    { id: "west", name: "Mitra", startAngle: 225, endAngle: 315, color: "rgba(192, 132, 252, 0.4)", textColor: "#581c87" }
+];
+
+const EIGHT_MIDDLE_DEVTAS = [
+    { name: "Aap", startAngle: 337.5, endAngle: 22.5 },
+    { name: "Aapavatsa", startAngle: 22.5, endAngle: 67.5 },
+    { name: "Savita", startAngle: 67.5, endAngle: 112.5 },
+    { name: "Savitra", startAngle: 112.5, endAngle: 157.5 },
+    { name: "Jaya", startAngle: 157.5, endAngle: 202.5 },
+    { name: "Indra", startAngle: 202.5, endAngle: 247.5 },
+    { name: "Rajyakshman", startAngle: 247.5, endAngle: 292.5 },
+    { name: "Rudra", startAngle: 292.5, endAngle: 337.5 }
+];
+
+export default function DevtaLayer({ scale, centerPoint, points }) {
+    const exclusionPolygons = useExclusion(s => s.exclusionPolygons);
+    const { isActive, showBrahmasthan, showInnerDevtas, activeLayers } = useDevta();
+    const showMiddleDevtas = activeLayers?.eightDevtas !== false;
+    const { rotation } = useShaktiChakra();
+
+    const [exportSettings, setExportSettings] = useState(window.vastuExportSettings || { active: false });
+
+    useEffect(() => {
+        const handleExportUpdate = (e) => setExportSettings(e.detail);
+        window.addEventListener('vastu-export-update', handleExportUpdate);
+        return () => window.removeEventListener('vastu-export-update', handleExportUpdate);
+    }, []);
+
+    if (!isActive) return null;
+    if (exportSettings.active && exportSettings.reportType !== 'devta') return null;
+    if (!centerPoint || !points || points.length < 3) return null;
+
+    // --- GEOMETRY HELPERS ---
+    const middleOuterF = 2 / 3;
+    const brahmaOuterF = 1 / 3;
+    const marmaInnerF = 1 / 9;
+
+    // Helper to find the correct mid-angle for circular arcs
+    const getMidAngle = (s, e) => {
+        let diff = e - s;
+        if (diff < 0) diff += 360;
+        return (s + diff / 2) % 360;
+    };
+
+    const getScaledPoints = (factor) => {
+        return points.map(p => ({
+            x: centerPoint.x + (p.x - centerPoint.x) * factor,
+            y: centerPoint.y + (p.y - centerPoint.y) * factor
+        })).map(p => `${p.x},${p.y}`).join(" ");
+    };
+
+    const getWedgePoints = (startDeg, endDeg) => {
+        const safeRot = (rotation || 0) % 360;
+        const s = (startDeg + safeRot - 90) * (Math.PI / 180);
+        const e = (endDeg + (endDeg < startDeg ? 360 : 0) + safeRot - 90) * (Math.PI / 180);
+        const r = 5000;
+        const p1 = `${centerPoint.x},${centerPoint.y}`;
+        const p2 = `${centerPoint.x + Math.cos(s) * r},${centerPoint.y + Math.sin(s) * r}`;
+        const p3 = `${centerPoint.x + Math.cos(e) * r},${centerPoint.y + Math.sin(e) * r}`;
+        return `${p1} ${p2} ${p3}`;
+    };
+
+    const middleRingOuter = getScaledPoints(middleOuterF);
+    const fullRingOuter = getScaledPoints(brahmaOuterF);
+    const fullRingInner = getScaledPoints(marmaInnerF);
+
+    return (
+        <svg width="100%" height="100%" style={{ position: "absolute", inset: 0, zIndex: 95, pointerEvents: "none", overflow: 'visible' }}>
+            <defs>
+                <clipPath id="global-plot-clip">
+                    <polygon points={points.map(p => `${p.x},${p.y}`).join(" ")} />
+                </clipPath>
+                {FOUR_INNER_DEVTAS.map(devta => (
+                    <clipPath key={`clip-${devta.id}`} id={`clip-sector-${devta.id}`}>
+                        <polygon points={getWedgePoints(devta.startAngle, devta.endAngle)} />
+                    </clipPath>
+                ))}
+            </defs>
+
+            <g clipPath="url(#global-plot-clip)">
+                {/* 4 INNER DEVTAS RING */}
+                {showInnerDevtas && FOUR_INNER_DEVTAS.map((devta, i) => {
+                    const midA = getMidAngle(devta.startAngle, devta.endAngle);
+                    const finalA = (midA + (rotation || 0)) % 360;
+
+                    // Find intersection on the actual boundary at this angle
+                    const intersection = getBoundaryIntersection(centerPoint, finalA, points);
+
+                    // Scale that intersection point to the outer boundary of the Devta ring (1/3rd)
+                    let lx = centerPoint.x;
+                    let ly = centerPoint.y;
+
+                    if (intersection) {
+                        lx = centerPoint.x + (intersection.x - centerPoint.x) * brahmaOuterF;
+                        ly = centerPoint.y + (intersection.y - centerPoint.y) * brahmaOuterF;
+                    }
+
+                    return (
+                        <g key={`devta-group-${i}`} clipPath={`url(#clip-sector-${devta.id})`}>
+                            <path
+                                d={`M ${fullRingOuter} Z M ${fullRingInner} Z`}
+                                fill={devta.color}
+                                fillRule="evenodd"
+                                stroke="rgba(255,255,255,0.4)"
+                                strokeWidth={0.5 / scale}
+                            />
+                            {/* Label exactly on the boundary line for the 4 Devtas */}
+                            <text
+                                x={lx}
+                                y={ly}
+                                fontSize={12 / scale}
+                                fontWeight="900"
+                                textAnchor="middle"
+                                dominantBaseline="middle"
+                                fill={devta.textColor}
+                                style={{
+                                    paintOrder: "stroke",
+                                    stroke: "#ffffff",
+                                    strokeWidth: `${3 / scale}px`,
+                                    userSelect: "none"
+                                }}
+                            >
+                                {devta.name.toUpperCase()}
+                            </text>
+                        </g>
+                    );
+                })}
+
+                {/* 8 MIDDLE DEVTAS RING */}
+                {showMiddleDevtas && EIGHT_MIDDLE_DEVTAS.map((devta, i) => {
+                    const midA = getMidAngle(devta.startAngle, devta.endAngle);
+                    const finalA = (midA + (rotation || 0)) % 360;
+                    const intersection = getBoundaryIntersection(centerPoint, finalA, points);
+
+                    let lx = centerPoint.x;
+                    let ly = centerPoint.y;
+
+                    if (intersection) {
+                        lx = centerPoint.x + (intersection.x - centerPoint.x) * middleOuterF;
+                        ly = centerPoint.y + (intersection.y - centerPoint.y) * middleOuterF;
+                    }
+
+                    return (
+                        <g key={`middle-devta-${i}`}>
+                            <clipPath id={`clip-middle-${i}`}>
+                                <polygon points={getWedgePoints(devta.startAngle, devta.endAngle)} />
+                            </clipPath>
+                            <g clipPath={`url(#clip-middle-${i})`}>
+                                <path
+                                    d={`M ${middleRingOuter} Z M ${fullRingOuter} Z`}
+                                    fill={i % 2 === 0 ? "rgba(249, 115, 22, 0.15)" : "rgba(148, 163, 184, 0.15)"}
+                                    fillRule="evenodd"
+                                    stroke="rgba(0,0,0,0.1)"
+                                    strokeWidth={0.3 / scale}
+                                />
+                                <text
+                                    x={lx}
+                                    y={ly}
+                                    fontSize={10 / scale}
+                                    fontWeight="800"
+                                    textAnchor="middle"
+                                    dominantBaseline="middle"
+                                    fill="#475569"
+                                    style={{
+                                        paintOrder: "stroke",
+                                        stroke: "#ffffff",
+                                        strokeWidth: `${2 / scale}px`,
+                                        userSelect: "none",
+                                        letterSpacing: "0.5px"
+                                    }}
+                                >
+                                    {devta.name.toUpperCase()}
+                                </text>
+                            </g>
+                        </g>
+                    );
+                })}
+
+                {/* CENTRAL MARMA */}
+                {showBrahmasthan && (
+                    <g>
+                        <polygon
+                            points={fullRingInner}
+                            fill="rgba(255, 235, 59, 1)"
+                            stroke="#ca8a04"
+                            strokeWidth={1.5 / scale}
+                        />
+                        <text
+                            x={centerPoint.x}
+                            y={centerPoint.y}
+                            fontSize={10 / scale}
+                            fontWeight="900"
+                            textAnchor="middle"
+                            dominantBaseline="middle"
+                            fill="#78350f"
+                            style={{
+                                paintOrder: "stroke",
+                                stroke: "#ffffff",
+                                strokeWidth: `${3.5 / scale}px`,
+                                userSelect: "none"
+                            }}
+                        >
+                            MARMA
+                        </text>
+                    </g>
+                )}
+            </g>
+
+            <g style={{ pointerEvents: 'none' }}>
+                {exclusionPolygons.map((poly, idx) => (
+                    <polygon key={idx} points={poly.points.map(p => `${p.x},${p.y}`).join(" ")} fill="rgba(239, 68, 68, 0.05)" stroke="#ef4444" strokeWidth={0.5 / scale} strokeDasharray={2 / scale} />
+                ))}
+            </g>
+        </svg>
+    );
+}

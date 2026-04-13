@@ -1,0 +1,769 @@
+{
+    "time": "2026-02-14 07:49:27",
+    "url": "https:\/\/api.phonepe.com\/apis\/pg\/v1\/pay",
+    "merchantId": "SU2601231708290817219891",
+    "httpCode": 400,
+    "response": "{\"message\":\"Bad Request - Api Mapping Not Found\"}",
+    "payload": {
+        "merchantId": "SU2601231708290817219891",
+        "merchantTransactionId": "PLAN_54_1771051767186_1771051767225",
+        "merchantUserId": "USER_69901af73807f",
+        "amount": 100,
+        "redirectUrl": "http:\/\/localhost\/myvastutool\/api\/phonepe\/callback.php?order_id=PLAN_54_1771051767186_1771051767225&return_url=http%3A%2F%2Flocalhost%3A5173%2F%23%2Fdashboard",
+        "redirectMode": "REDIRECT",
+        "callbackUrl": "http:\/\/localhost\/myvastutool\/api\/phonepe\/callback.php",
+        "deviceContext": {
+            "deviceOS": "WEB"
+        },
+        "paymentInstrument": {
+            "type": "PAY_PAGE"
+        }
+    }
+}
+{
+    "time": "2026-02-14 07:49:50",
+    "url": "https:\/\/api.phonepe.com\/apis\/pg\/v1\/pay",
+    "merchantId": "SU2601231708290817219891",
+    "httpCode": 400,
+    "response": "{\"message\":\"Bad Request - Api Mapping Not Found\"}",
+    "payload": {
+        "merchantId": "SU2601231708290817219891",
+        "merchantTransactionId": "PLAN_54_1771051767186_1771051790422",
+        "merchantUserId": "USER_69901b0e686ee",
+        "amount": 100,
+        "redirectUrl": "http:\/\/localhost\/myvastutool\/api\/phonepe\/callback.php?order_id=PLAN_54_1771051767186_1771051790422&return_url=http%3A%2F%2Flocalhost%3A5173%2F%23%2Fdashboard",
+        "redirectMode": "REDIRECT",
+        "callbackUrl": "http:\/\/localhost\/myvastutool\/api\/phonepe\/callback.php",
+        "deviceContext": {
+            "deviceOS": "WEB"
+        },
+        "paymentInstrument": {
+            "type": "PAY_PAGE"
+        }
+    }
+}
+{
+    "time": "2026-02-14 07:50:38",
+    "url": "https:\/\/api.phonepe.com\/apis\/hermes\/pg\/v1\/pay",
+    "merchantId": "SU2601231708290817219891",
+    "httpCode": 404,
+    "response": "{\"success\":false,\"code\":\"404\"}",
+    "payload": {
+        "merchantId": "SU2601231708290817219891",
+        "merchantTransactionId": "PLAN_55_1771051838102_1771051838137",
+        "merchantUserId": "USER_69901b3e22775",
+        "amount": 100,
+        "redirectUrl": "http:\/\/localhost\/myvastutool\/api\/phonepe\/callback.php?order_id=PLAN_55_1771051838102_1771051838137&return_url=http%3A%2F%2Flocalhost%3A5173%2F%23%2Fdashboard",
+        "redirectMode": "REDIRECT",
+        "callbackUrl": "http:\/\/localhost\/myvastutool\/api\/phonepe\/callback.php",
+        "deviceContext": {
+            "deviceOS": "WEB"
+        },
+        "paymentInstrument": {
+            "type": "PAY_PAGE"
+        }
+    }
+}
+{
+    "time": "2026-02-14 07:52:52",
+    "step": "OAuth",
+    "url": "https:\/\/api.phonepe.com\/apis\/identity-manager\/v1\/oauth\/token",
+    "httpCode": 200,
+    "response": {
+        "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJpZGVudGl0eU1hbmFnZXIiLCJ2ZXJzaW9uIjoiNC4wIiwidGlkIjoiMjVjY2FhM2MtYjE2ZC00MjBlLWExODgtOWQ2ODQ5OTM2Y2UyIiwic2lkIjoiZDMxNWI3NDMtYzNhNS00NTZlLWExZWMtNmE3NjhhYmRlZjQzIiwiaWF0IjoxNzcxMDUxMjA4LCJleHAiOjE3NzEwNTQ4MDh9.R9amEDVZWqLOb7-uIZpzLMUhhIgnlvltvspRv0LrP40QEoo1SVIH7D9OuUjVciY7nFh0B8cJMvq13eayUVCPzw",
+        "encrypted_access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJpZGVudGl0eU1hbmFnZXIiLCJ2ZXJzaW9uIjoiNC4wIiwidGlkIjoiMjVjY2FhM2MtYjE2ZC00MjBlLWExODgtOWQ2ODQ5OTM2Y2UyIiwic2lkIjoiZDMxNWI3NDMtYzNhNS00NTZlLWExZWMtNmE3NjhhYmRlZjQzIiwiaWF0IjoxNzcxMDUxMjA4LCJleHAiOjE3NzEwNTQ4MDh9.R9amEDVZWqLOb7-uIZpzLMUhhIgnlvltvspRv0LrP40QEoo1SVIH7D9OuUjVciY7nFh0B8cJMvq13eayUVCPzw",
+        "refresh_token": "f27e6b64-a284-49a0-ab11-644745313f39",
+        "expires_in": 2836,
+        "issued_at": 1771051208,
+        "expires_at": 1771054808,
+        "session_expires_at": 1771054808,
+        "token_type": "O-Bearer"
+    }
+}
+{
+    "time": "2026-02-14 07:52:53",
+    "step": "Payment_Initiate",
+    "url": "https:\/\/api.phonepe.com\/apis\/hermes\/pg\/v1\/pay",
+    "httpCode": 404,
+    "response": {
+        "success": false,
+        "code": "404"
+    }
+}
+{
+    "time": "2026-02-14 08:01:32",
+    "step": "OAuth",
+    "url": "https:\/\/api.phonepe.com\/apis\/identity-manager\/v1\/oauth\/token",
+    "httpCode": 200,
+    "response": {
+        "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJpZGVudGl0eU1hbmFnZXIiLCJ2ZXJzaW9uIjoiNC4wIiwidGlkIjoiYTI3MjgyMDktMGEwZC00YjUzLTg3NWUtMmY1YTQ1NjE3ZTdiIiwic2lkIjoiZDY2YTlmYzQtMmU2Yi00YTU3LTllNDQtZWQ3ZTkxOTMwNWFlIiwiaWF0IjoxNzcxMDUyNDkyLCJleHAiOjE3NzEwNTYwOTJ9.d10cg4eUm-kuHsKhGrlXytvca0hcyGGF4BfDYpN_tMFZ3LVBOZO49JGGfQ7Lq0pDi02hQKcByV6gDcdOqEFGJg",
+        "encrypted_access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJpZGVudGl0eU1hbmFnZXIiLCJ2ZXJzaW9uIjoiNC4wIiwidGlkIjoiYTI3MjgyMDktMGEwZC00YjUzLTg3NWUtMmY1YTQ1NjE3ZTdiIiwic2lkIjoiZDY2YTlmYzQtMmU2Yi00YTU3LTllNDQtZWQ3ZTkxOTMwNWFlIiwiaWF0IjoxNzcxMDUyNDkyLCJleHAiOjE3NzEwNTYwOTJ9.d10cg4eUm-kuHsKhGrlXytvca0hcyGGF4BfDYpN_tMFZ3LVBOZO49JGGfQ7Lq0pDi02hQKcByV6gDcdOqEFGJg",
+        "refresh_token": "bfd56fb9-ada5-4463-bfa2-8d5a27e2e778",
+        "expires_in": 3600,
+        "issued_at": 1771052492,
+        "expires_at": 1771056092,
+        "session_expires_at": 1771056092,
+        "token_type": "O-Bearer"
+    }
+}
+{
+    "time": "2026-02-14 08:01:33",
+    "step": "Payment_Initiate_PG_CHECKOUT",
+    "url": "https:\/\/api.phonepe.com\/apis\/pg\/checkout\/v2\/pay",
+    "httpCode": 200,
+    "response": {
+        "orderId": "OMO2602141231328903993397W",
+        "state": "PENDING",
+        "redirectUrl": "https:\/\/mercury-t2.phonepe.com\/transact\/pgv3?token=hq4wOGdzX31IuPyyh7\/7AYOLiipO42P8QtgmusudZHta7zUAMbV5uMV5f6kF1hmvheryrLtNiVZhT0JOWuOfLhZE4R3qAOPk+SgM6E4gpwxBDKieLKVOYnt35dBPh4dgV8VnzO1ovp329m5hHk2clE0BgaqLPp9BhCBkosij228XC7sc7m8GSaWm7eEIOQNp91D5SC\/rKdNWghMBDWr5cFdx+h1sxyxrhNvQKqGCweyEYXqWqecbyVo0MV\/iGZPIBk8cUtUoykUuravJ5ASBM0\/NXXgt14+uxuZYExSDCDJaePbrLZsJAqW3rO9vU3WC00KOGy2YS52bsnXDokpFeQ2+Y3ZJiZlcQpCehPVZiifLE7NEwrE0iT3CpljRRO7nXYwcVvCnE8hkZZ9krsHBTVQDabIQ2CRq0bBpsV7SIqu0aoPSu3R2llzg1MbNyc86WEk3P7j6kJyjDPCpw8md77NfcpXHRMT+g5bTlOJ+zbft8tBSEAsX0kAhNrZ8TSBOS2PkvEgUeIVrOMSHkDffZsf+jcmoYrxSsEebj1743jD6LkAMk5M=&routingKey=W",
+        "expireAt": 1771053692861
+    },
+    "payload": {
+        "merchantOrderId": "PLAN_57_1771052492474_1771052492513",
+        "amount": 100,
+        "expireAfter": 1200,
+        "paymentFlow": {
+            "type": "PG_CHECKOUT",
+            "message": "Payment for order PLAN_57_1771052492474_1771052492513",
+            "merchantUrls": {
+                "redirectUrl": "http:\/\/localhost\/myvastutool\/api\/phonepe\/callback.php?order_id=PLAN_57_1771052492474_1771052492513&return_url=http%3A%2F%2Flocalhost%3A5173%2F%23%2Fdashboard",
+                "callbackUrl": "http:\/\/localhost\/myvastutool\/api\/phonepe\/callback.php"
+            }
+        }
+    }
+}
+{
+    "time": "2026-02-14 08:04:47",
+    "step": "OAuth",
+    "url": "https:\/\/api.phonepe.com\/apis\/identity-manager\/v1\/oauth\/token",
+    "httpCode": 200,
+    "response": {
+        "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJpZGVudGl0eU1hbmFnZXIiLCJ2ZXJzaW9uIjoiNC4wIiwidGlkIjoiMjVjY2FhM2MtYjE2ZC00MjBlLWExODgtOWQ2ODQ5OTM2Y2UyIiwic2lkIjoiZDMxNWI3NDMtYzNhNS00NTZlLWExZWMtNmE3NjhhYmRlZjQzIiwiaWF0IjoxNzcxMDUxMjA4LCJleHAiOjE3NzEwNTQ4MDh9.R9amEDVZWqLOb7-uIZpzLMUhhIgnlvltvspRv0LrP40QEoo1SVIH7D9OuUjVciY7nFh0B8cJMvq13eayUVCPzw",
+        "encrypted_access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJpZGVudGl0eU1hbmFnZXIiLCJ2ZXJzaW9uIjoiNC4wIiwidGlkIjoiMjVjY2FhM2MtYjE2ZC00MjBlLWExODgtOWQ2ODQ5OTM2Y2UyIiwic2lkIjoiZDMxNWI3NDMtYzNhNS00NTZlLWExZWMtNmE3NjhhYmRlZjQzIiwiaWF0IjoxNzcxMDUxMjA4LCJleHAiOjE3NzEwNTQ4MDh9.R9amEDVZWqLOb7-uIZpzLMUhhIgnlvltvspRv0LrP40QEoo1SVIH7D9OuUjVciY7nFh0B8cJMvq13eayUVCPzw",
+        "refresh_token": "f27e6b64-a284-49a0-ab11-644745313f39",
+        "expires_in": 2121,
+        "issued_at": 1771051208,
+        "expires_at": 1771054808,
+        "session_expires_at": 1771054808,
+        "token_type": "O-Bearer"
+    }
+}
+{
+    "time": "2026-02-14 08:04:48",
+    "step": "Payment_Initiate_PG_CHECKOUT",
+    "url": "https:\/\/api.phonepe.com\/apis\/pg\/checkout\/v2\/pay",
+    "httpCode": 200,
+    "response": {
+        "orderId": "OMO2602141234477068487302W",
+        "state": "PENDING",
+        "redirectUrl": "https:\/\/mercury-t2.phonepe.com\/transact\/pgv3?token=hq4wOGdzX31IuPyyh7\/7AYOLiipO42P8QtgmusudZHta7zUAMbV5uMV5f6kF1hmvheryrLtNiVZMSEI9Q\/vEZxxD3wnoAOPk+SgM6E4gpwBBDKieLKVOYnt35dhOhJd8UMVnzO1ovp329m5hHk2ymAcBkb7CPp9BhCBkosij228XC7sc7m8GSaWm7eEIOQNh9lPpSC\/rKdNWghMBDWr5cFdx+h1sxyxrhNvQKqGCweyEYXqWqecbyVo0MV\/iGZPIBk8cUtUoykUuravJ5ASBM0\/NXXgt14+uxuZYExSDCDJaePbrLZsJAqW3rO9vU3WC00KOGy2YS52bsnXDokpFeQ2+Y3ZJiZlcQpCehPVZiifLE7NEwrE0iT3CpljRRO7nXYwcVvCnE8hkZZ9krsHBTVQDabIQ2CRq0bFHtRTSIquafrHNxidQ1kP2tqXehYMtNFM5LrbYkIe3Jvmbo+yFlblpEo3kWOPusLz7t9BW2LOfia9xHBEIzEooPIUYAj4Xc0va3hMcDql1Y5OssjD9MuWt+c+gRGGnjDDRmUfQDjzQSXGsEfw=&routingKey=W",
+        "expireAt": 1771053887690
+    },
+    "payload": {
+        "merchantOrderId": "PLAN_58_1771052687384_1771052687447",
+        "amount": 100,
+        "expireAfter": 1200,
+        "paymentFlow": {
+            "type": "PG_CHECKOUT",
+            "message": "Payment for order PLAN_58_1771052687384_1771052687447",
+            "merchantUrls": {
+                "redirectUrl": "http:\/\/localhost\/myvastutool\/api\/phonepe\/callback.php?order_id=PLAN_58_1771052687384_1771052687447&return_url=http%3A%2F%2Flocalhost%3A5173%2F%23%2Fdashboard",
+                "callbackUrl": "http:\/\/localhost\/myvastutool\/api\/phonepe\/callback.php"
+            }
+        }
+    }
+}
+{
+    "time": "2026-02-14 08:06:44",
+    "url": "https:\/\/api.phonepe.com\/apis\/pg\/checkout\/v2\/pay",
+    "httpCode": 200,
+    "response": {
+        "orderId": "OMO2602141236443520204367W",
+        "state": "PENDING",
+        "redirectUrl": "https:\/\/mercury-t2.phonepe.com\/transact\/pgv3?token=hq4wOGdzX31IuPyyh7\/7AYOLiipO42P8QtgmusudZHta7zUAMbV5uMV5f6kF1hmvheryrLtNiVZMSEI9Q\/vEZxxD3wnoAOPk+SgM6E4gpwRBDKieLKVOYnt35eYNh5dSVcZnzO1ovp329m5hHkycvk4Br4SGPp9BhCBkosij228XC7sc7m8GSaWm7eEIOQNftVPTSC\/rKdNWghMBDWr5cFdx+h1sxyxrhNvQKqGCweyEYXqWqecbyVo0MV\/iGZPIBk8cUtUoykUuravJ5ASBM0\/NXXgt14+uxuZYExSDCDJaePbrLZsJAqW3rO9vU3WC00KOGy2YS52bsnXDokpFeQ2+Y3ZJiZlcQpCehPVZiifLE7NEwrE0iT3CpljRRO7nXYwcVvCnE8hkZZ9krsHBTVQDabIQ2CRq0bFXrVzSIqvIQL7TzwtK9Xay1NPrmudDIlEhM+CvxsWfEtOc3JGy\/ZhkT4P+ZeP89Kf8stV4uLXe+614Cyt57nktGtUaVhZhTHDb6XQvee5YGvKsw3\/2LeH28eykYg0L0gyuqheFo7nl7ovV9wI=&routingKey=W",
+        "expireAt": 1771054004341
+    },
+    "payload": {
+        "merchantOrderId": "PLAN_59_1771052803750_1771052803790",
+        "amount": 100,
+        "expireAfter": 1200,
+        "paymentFlow": {
+            "type": "PG_CHECKOUT",
+            "message": "Vastu Tool Order PLAN_59_1771052803750_1771052803790",
+            "merchantUrls": {
+                "redirectUrl": "http:\/\/localhost\/myvastutool\/api\/phonepe\/callback.php?order_id=PLAN_59_1771052803750_1771052803790&return_url=http%3A%2F%2Flocalhost%3A5173%2F%23%2Fdashboard",
+                "callbackUrl": "http:\/\/localhost\/myvastutool\/api\/phonepe\/callback.php"
+            }
+        }
+    }
+}
+{
+    "time": "2026-03-23 09:43:11",
+    "url": "https:\/\/api.phonepe.com\/apis\/pg\/checkout\/v2\/pay",
+    "httpCode": 200,
+    "response": {
+        "orderId": "OMO2603231413110662037813W",
+        "state": "PENDING",
+        "redirectUrl": "https:\/\/mercury-t2.phonepe.com\/transact\/pgv3?token=hq4wOGdzX31IuPyyh7\/7AYOLiipO42P8QtgmusudZHta7zUAMbV5uMV5f6kF1hmvheryrLtNiVZMSEI9Q\/vEZxxD3wnoAOPk+SgM6E4jpyVdGYa4LKZgcjN029QAhalkVNNbsaZovq\/39X5hHUyMvgIbvqWoOJ0DrhZwrYuj3GwHIYI26G84f6emw8tBOCpysn6jci\/FGNdlkSEkEGPma0df7gFv7HdkgfHXfLuN18HUeSa8p+4b80MwMkPIG\/TQFUJETfIz8V4rhYXv5QSPUE\/OLGd9\/7Ot+f1kaAucNHR9S\/3sMrELba+3t+w\/e0mB7FmyYDKHd9u8h0vMpVl7BVOVX3F2kqUnXY+iwtJqkQLPAI5fwZsejmHvolTOQO6fXKIIcPaLMv5kcK1J6sbRc1UDR4hZ2Bp9ktBhj2HsGMCQU6HM+j4W4FXVrqXbttc7GVg8D\/awyvm\/Ms+N8d\/jxKt3Fs3DB+f77ZHPqZUu0Kjhrc0DKh4CswE7F6R9XDBval3Y7xYzC413IpmJs1THLAhxb4QO4QC4zbAKu3uR9LI=&routingKey=W",
+        "expireAt": 1774256591032
+    },
+    "payload": {
+        "merchantId": "SU2601231708290817219891",
+        "merchantOrderId": "PLAN_133_17742553854_1774255390",
+        "amount": 100,
+        "expireAfter": 1200,
+        "metaInfo": {
+            "udf1": "VastuTool",
+            "udf2": "Order_PLAN_133_1774255385447",
+            "udf3": "Amount_1",
+            "udf4": "Web",
+            "udf5": "Live"
+        },
+        "paymentFlow": {
+            "type": "PG_CHECKOUT",
+            "message": "Vastu Tool Payment PLAN_133_1774255385447",
+            "merchantUrls": {
+                "redirectUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php?order_id=PLAN_133_1774255385447",
+                "callbackUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php"
+            }
+        }
+    }
+}
+{
+    "time": "2026-03-23 11:03:34",
+    "url": "https:\/\/api.phonepe.com\/apis\/pg\/checkout\/v2\/pay",
+    "httpCode": 200,
+    "response": {
+        "orderId": "OMO2603231533583013037815W",
+        "state": "PENDING",
+        "redirectUrl": "https:\/\/mercury-t2.phonepe.com\/transact\/pgv3?token=hq4wOGdzX31IuPyyh7\/7AYOLiipO42P8QtgmusudZHta7zUAMbV5uMV5f6kF1hmvheryrLtNiVZMSEI9Q\/vEZxxD3wnoAOTo5ysMj2I4tVBeGYa4LKZgcjN05cADh7l0VNNbsaZovq\/39UB1Hk6MsgIbvqWoOJ0DrhZwrYuj3GwHIYI26G84c+Gm0+0NOCpysn6jci\/FGNdlkSEkEGPma0df7gFv7HdkgfHXfLuN18HUeSa8p+4b80MwMkPIG\/TQFUJETfIz8V4rhYXv5QSPUE\/OLGd9\/7Ot+f1kaAucNHR9S\/3sMrELba+3t+w\/e0mB7FmyYDKHd9u8h0vMpVl7BVOVX3F2kqUnXY+iwtJqkQLPAI5fwZsejmHvolTOQO6fXKIIcPaLMv5kcK1J6sbRc1UDeZQS2xpbktB7l3ntCtG9RZTx4TFx+lrQ092FpYcVPU4CHuvW6Oj+Ju3J9Nbu58xsT7XbBtzQ8JLqg5B8zPHWiu8JJxoNtB0JFrcPY0xnElTf0mU0cIl1Isyojz2iGvDJZtJuVz1x8AOiCwEko1M=&routingKey=W",
+        "expireAt": 1774261438290
+    },
+    "payload": {
+        "merchantId": "SU2601231708290817219891",
+        "merchantOrderId": "CREDIT_2_17742602114_1774260213",
+        "amount": 49900,
+        "expireAfter": 1200,
+        "metaInfo": {
+            "udf1": "VastuTool",
+            "udf2": "Order_CREDIT_2_1774260211486",
+            "udf3": "Amount_499.00",
+            "udf4": "Web",
+            "udf5": "Live"
+        },
+        "paymentFlow": {
+            "type": "PG_CHECKOUT",
+            "message": "Vastu Tool Payment CREDIT_2_1774260211486",
+            "merchantUrls": {
+                "redirectUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php?order_id=CREDIT_2_1774260211486",
+                "callbackUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php"
+            }
+        }
+    }
+}
+{
+    "time": "2026-03-24 06:57:02",
+    "url": "https:\/\/api.phonepe.com\/apis\/pg\/checkout\/v2\/pay",
+    "httpCode": 200,
+    "response": {
+        "orderId": "OMO2603241127014770727683W",
+        "state": "PENDING",
+        "redirectUrl": "https:\/\/mercury-t2.phonepe.com\/transact\/pgv3?token=hq4wOGdzX31IuPyyh7\/7AYOLiipO42P8QtgmusudZHta7zUAMbV5uMV5f6kF1hmvheryrLtNiVZMSEI9Q\/vEZxxD3wnoAOTo5ysMj2I4tVBeGYa4LKZgcjB39cROh7l4VtNbsaZovq\/09lBxU06MnAIbvqWoOJ0DrhZwrYuj3GwHIYI26G8oZ+6k\/elBOCpysn6jci\/FGNdlkSEkEGPma0df7gFv7HdkgfHXfLuN18HUeSa8p+4b80MwMkPIG\/TQFUJETfIz8V4rhYXv5QSPUE\/OLGd9\/7Ot+f1kaAucNHR9S\/3sMrELba+3t+w\/e0mB7FmyYDKHd9u8h0vMpVl7BVOVX3F2kqUnXY+iwtJqkQLPAI5fwZsejmHvolTOQO6fXKIIcPaLMv5kcK1J6sbRc1YAaZhd2wp9ktB0iWiCMqisTKD39TJP2ETs6q\/VqfM\/X00YHrf6w4SrDeXIyeqIlI1NaMrgWv3RmdXKqfB06a7+k9xEdA0k+G4eQ6h+QydRf2Dc4lYucut1E5iAu137Ckoms2QpSwSAn2XcFdEQepE=&routingKey=W",
+        "expireAt": 1774333021449
+    },
+    "payload": {
+        "merchantId": "SU2601231708290817219891",
+        "merchantOrderId": "CREDIT_2_17743318126_1774331817",
+        "amount": 49900,
+        "expireAfter": 1200,
+        "metaInfo": {
+            "udf1": "VastuTool",
+            "udf2": "Order_CREDIT_2_1774331812693",
+            "udf3": "Amount_499.00",
+            "udf4": "Web",
+            "udf5": "Live"
+        },
+        "paymentFlow": {
+            "type": "PG_CHECKOUT",
+            "message": "Vastu Tool Payment CREDIT_2_1774331812693",
+            "merchantUrls": {
+                "redirectUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php?order_id=CREDIT_2_1774331812693",
+                "callbackUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php"
+            }
+        }
+    }
+}
+{
+    "time": "2026-03-24 08:22:45",
+    "url": "https:\/\/api.phonepe.com\/apis\/pg\/checkout\/v2\/pay",
+    "httpCode": 200,
+    "response": {
+        "orderId": "OMO2603241252445287923927W",
+        "state": "PENDING",
+        "redirectUrl": "https:\/\/mercury-t2.phonepe.com\/transact\/pgv3?token=hq4wOGdzX31IuPyyh7\/7AYOLiipO42P8QtgmusudZHta7zUAMbV5uMV5f6kF1hmvheryrLtNiVZMSEI9Q\/vEZxxD3wnoAOSf8Choi2U4tVASGYa4LKZgcjB39dhPhLloUNNbsaZovq\/09lBtUk2MmAIbvqWoOJ0DrhZwrYuj3GwHIYI26G8oZ6Sk7fkJOCpysn6jci\/FGNdlkSEkEGPma0df7gFv7HdkgfHXfLuN18HUeSa8p+4b80MwMkPIG\/TQFUJETfIz8V4rhYXv5QSPUE\/OLGd9\/7Ot+f1kaAucNHR9S\/3sMrELba+3t+w\/e0mB7FmyYDKHd9u8h0vMpVl7BVOVX3F2kqUnXY+iwtJqkQLPAI5fwZsejmHvolTOQO6fXKIIcPaLMv5kcK1J6sbRc1YAabYQ2CRxktBVy03AGvOsQ6fM\/gVulVOxquXxrftCJ3U+N8HqxeT3M9S44p7s+ssySJfQX+zPsZ7ojM188ozlns1TKiAY9k4DEJoqe0JEelqfyRkoSoNnA9uIulbILIq2A+\/k7RlCvIKlAJlH37A=&routingKey=W",
+        "expireAt": 1774338164517
+    },
+    "payload": {
+        "merchantId": "SU2601231708290817219891",
+        "merchantOrderId": "OCCULT_9_17743369568_1774336958",
+        "amount": 29500,
+        "expireAfter": 1200,
+        "metaInfo": {
+            "udf1": "VastuTool",
+            "udf2": "Order_OCCULT_9_1774336956892",
+            "udf3": "Amount_295",
+            "udf4": "Web",
+            "udf5": "Live"
+        },
+        "paymentFlow": {
+            "type": "PG_CHECKOUT",
+            "message": "Vastu Tool Payment OCCULT_9_1774336956892",
+            "merchantUrls": {
+                "redirectUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php?order_id=OCCULT_9_1774336956892",
+                "callbackUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php"
+            }
+        }
+    }
+}
+{
+    "time": "2026-03-24 09:40:43",
+    "url": "https:\/\/api.phonepe.com\/apis\/pg\/checkout\/v2\/pay",
+    "httpCode": 200,
+    "response": {
+        "orderId": "OMO2603241410434137284536W",
+        "state": "PENDING",
+        "redirectUrl": "https:\/\/mercury-t2.phonepe.com\/transact\/pgv3?token=hq4wOGdzX31IuPyyh7\/7AYOLiipO42P8QtgmusudZHta7zUAMbV5uMV5f6kF1hmvheryrLtNiVZMSEI9Q\/vEZxxD3wnoAOSf8Choi2U4tVBfDLrFZ6ZgQHp39dAChIdgHNNbsaZovq\/09W5xVU2ctgIbvqWoOJ0DrhZwrYuj3GwHIYI26G8oe+6l0\/FDOCpysn6jci\/FGNdlkSEkEGPma0df7gFv7HdkgfHXfLuN18HUeSa8p+4b80MwMkPIG\/TQFUJETfIz8V4rhYXv5QSPUE\/OLGd9\/7Ot+f1kaAucNHR9S\/3sMrELba+3t+w\/e0mB7FmyYDKHd9u8h0vMpVl7BVOVX3F2kqUnXY+iwtJqkQLPAI5fwZsejmHvolTOQO6fXKIIcPaLMv5kcK1J6sbRc1YDV5hb2iR1ktBlrxfxNu2yUeHTuBJX+lnv0ubVt8EGLkwNc8jS7eK\/EcqY9NWY1JFJY5f7SL3wmMjBi9BR8IDOksBaKi0+7nUxA7Z+TiR\/eiPizxgWW6xmeuiEolHTPA75jVAFRSvLREj0+F41VSU=&routingKey=W",
+        "expireAt": 1774342843402
+    },
+    "payload": {
+        "merchantId": "SU2601231708290817219891",
+        "merchantOrderId": "OCCULT_10_1774341641_1774341642",
+        "amount": 9700,
+        "expireAfter": 1200,
+        "metaInfo": {
+            "udf1": "VastuTool",
+            "udf2": "Order_OCCULT_10_1774341641233",
+            "udf3": "Amount_97",
+            "udf4": "Web",
+            "udf5": "Live"
+        },
+        "paymentFlow": {
+            "type": "PG_CHECKOUT",
+            "message": "Vastu Tool Payment OCCULT_10_1774341641233",
+            "merchantUrls": {
+                "redirectUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php?order_id=OCCULT_10_1774341641233",
+                "callbackUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php"
+            }
+        }
+    }
+}
+{
+    "time": "2026-03-27 14:15:43",
+    "url": "https:\/\/api.phonepe.com\/apis\/pg\/checkout\/v2\/pay",
+    "httpCode": 200,
+    "response": {
+        "orderId": "OMO2603271845428239817270V",
+        "state": "PENDING",
+        "redirectUrl": "https:\/\/mercury-t2.phonepe.com\/transact\/pgv3?token=hq4wOGdzX31IuPyyh7\/7AYOLiipO42P8QtgmusudZHta7zUAMbV5uMV5f6kF1hmvheryrLtNiVZMSEI9Q\/vEZxxD3wnoAOSf8Choi2U4tVBfDKrFZ6ZgQHp05cRJh5d8UdNbsaZovq+89n5XHU2cvgIbgIeoOJ0DrhZwrYuj3GwHIYI26Gw4b6Wmw\/FAOCpysn6jci\/FGNdlkSEkEGPma0df7gFv7HdkgfHXfLuN18HUeSa8p+4b80MwMkPIG\/TQFUJETfIz8V4rhYXv5QSPUE\/OLGd9\/7Ot+f1kaAucNHR9S\/3sMrELba+3t+w\/e0mB7FmyYDKHd9u8h0vMpVl7BVOVX3F2kqUnXY+iwtJqkQLPAI5fwZsejmHvolTOQO6fXKIIcPaLMv5kcK1J6sbRcx4AR7ZY2iR5ktA0lFLcMfKsTZrytXZJ+gTMtqXlksEEFSdYMenY+sWJMoiU6\/Kw1Y9lYY3VY\/r1lJfshux6xrT0rf1hcx4a2Gs\/WZUADCFoEVTbu3YBW5JYHsCnjkymCva8Mo3LC9rDdwSLlTWYTbc=&routingKey=V",
+        "expireAt": 1774618542805
+    },
+    "payload": {
+        "merchantId": "SU2601231708290817219891",
+        "merchantOrderId": "OCCULT_11_1774617339_1774617340",
+        "amount": 9900,
+        "expireAfter": 1200,
+        "metaInfo": {
+            "udf1": "VastuTool",
+            "udf2": "Order_OCCULT_11_1774617339211",
+            "udf3": "Amount_99",
+            "udf4": "Web",
+            "udf5": "Live"
+        },
+        "paymentFlow": {
+            "type": "PG_CHECKOUT",
+            "message": "Vastu Tool Payment OCCULT_11_1774617339211",
+            "merchantUrls": {
+                "redirectUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php?order_id=OCCULT_11_1774617339211",
+                "callbackUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php"
+            }
+        }
+    }
+}
+{
+    "time": "2026-03-28 08:18:09",
+    "url": "https:\/\/api.phonepe.com\/apis\/pg\/checkout\/v2\/pay",
+    "httpCode": 200,
+    "response": {
+        "orderId": "OMO2603281248089040370663V",
+        "state": "PENDING",
+        "redirectUrl": "https:\/\/mercury-t2.phonepe.com\/transact\/pgv3?token=hq4wOGdzX31IuPyyh7\/7AYOLiipO42P8QtgmusudZHta7zUAMbV5uMV5f6kF1hmvheryrLtNiVZMSEI9Q\/vEZxxD3wnoAOTo5ysMj2I4tVBdGYa4LKZgcnh1y8gDhaloVNNbsaZovq+89G59HkycmAIbgIeoOJ0DrhZwrYuj3GwHIYI26Gw4Te+m08cNOCpysn6jci\/FGNdlkSEkEGPma0df7gFv7HdkgfHXfLuN18HUeSa8p+4b80MwMkPIG\/TQFUJETfIz8V4rhYXv5QSPUE\/OLGd9\/7Ot+f1kaAucNHR9S\/3sMrELba+3t+w\/e0mB7FmyYDKHd9u8h0vMpVl7BVOVX3F2kqUnXY+iwtJqkQLPAI5fwZsejmHvolTOQO6fXKIIcPaLMv5kcK1J6sbRcx4CV5xY2ApbktBRulaEPMyzdIf3wRZW1Wrt2f3VpOMQK1Aoceeo+9KQO+XL89OMxoF3foL9X+rYuZDTmZIh0PPIosx9DQt9sFo0Ho91Uy8REGHF2FQXWbtdZP+PpWK6PDSLL1pDk8DsWFdOXcJV4OY=&routingKey=V",
+        "expireAt": 1774683488886
+    },
+    "payload": {
+        "merchantId": "SU2601231708290817219891",
+        "merchantOrderId": "CREDIT_3_17746822864_1774682288",
+        "amount": 49900,
+        "expireAfter": 1200,
+        "metaInfo": {
+            "udf1": "VastuTool",
+            "udf2": "Order_CREDIT_3_1774682286466",
+            "udf3": "Amount_499.00",
+            "udf4": "Web",
+            "udf5": "Live"
+        },
+        "paymentFlow": {
+            "type": "PG_CHECKOUT",
+            "message": "Vastu Tool Payment CREDIT_3_1774682286466",
+            "merchantUrls": {
+                "redirectUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php?order_id=CREDIT_3_1774682286466",
+                "callbackUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php"
+            }
+        }
+    }
+}
+{
+    "time": "2026-03-28 08:32:28",
+    "url": "https:\/\/api.phonepe.com\/apis\/pg\/checkout\/v2\/pay",
+    "httpCode": 200,
+    "response": {
+        "orderId": "OMO2603281302278028298602V",
+        "state": "PENDING",
+        "redirectUrl": "https:\/\/mercury-t2.phonepe.com\/transact\/pgv3?token=hq4wOGdzX31IuPyyh7\/7AYOLiipO42P8QtgmusudZHta7zUAMbV5uMV5f6kF1hmvheryrLtNiVZMSEI9Q\/vEZxxD3wnoAOSf8Choi2U4tVBfD7rFZ6ZgQHp05eYAh7lgVtNbsaZovq+89G55H02cnAIbgIeoOJ0DrhZwrYuj3GwHIYI26Gw4Teym7fEKOCpysn6jci\/FGNdlkSEkEGPma0df7gFv7HdkgfHXfLuN18HUeSa8p+4b80MwMkPIG\/TQFUJETfIz8V4rhYXv5QSPUE\/OLGd9\/7Ot+f1kaAucNHR9S\/3sMrELba+3t+w\/e0mB7FmyYDKHd9u8h0vMpVl7BVOVX3F2kqUnXY+iwtJqkQLPAI5fwZsejmHvolTOQO6fXKIIcPaLMv5kcK1J6sbRcx4CV4AR2iRlktBmmxPgRs+\/ZbHZ9SZtkXvc0K+EtoAmCHUYIMrs1v+OH\/CM15WQ1YFiVo7aV\/uQi8rvl9d3zoDBvdhxLT8c5VoPTZR0XCx6UGfd60kqTrIuOciopDTdLJDpLKRcu1nIDhDA6qjjhZs=&routingKey=V",
+        "expireAt": 1774684347785
+    },
+    "payload": {
+        "merchantId": "SU2601231708290817219891",
+        "merchantOrderId": "OCCULT_14_1774683146_1774683147",
+        "amount": 9900,
+        "expireAfter": 1200,
+        "metaInfo": {
+            "udf1": "VastuTool",
+            "udf2": "Order_OCCULT_14_1774683146572",
+            "udf3": "Amount_99",
+            "udf4": "Web",
+            "udf5": "Live"
+        },
+        "paymentFlow": {
+            "type": "PG_CHECKOUT",
+            "message": "Vastu Tool Payment OCCULT_14_1774683146572",
+            "merchantUrls": {
+                "redirectUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php?order_id=OCCULT_14_1774683146572",
+                "callbackUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php"
+            }
+        }
+    }
+}
+{
+    "time": "2026-03-30 09:14:16",
+    "url": "https:\/\/api.phonepe.com\/apis\/pg\/checkout\/v2\/pay",
+    "httpCode": 200,
+    "response": {
+        "orderId": "OMO2603301244117160641941V",
+        "state": "PENDING",
+        "redirectUrl": "https:\/\/mercury-t2.phonepe.com\/transact\/pgv3?token=hq4wOGdzX31IuPyyh7\/7AYOLiipO42P8QtgmusudZHta7zUAMbV5uMV5f6kF1hmvheryrLtNiVZMSEI9Q\/vEZxxD3wnoAOSf8Choi2U4tVBfD6rFZ6ZgQHp1y9RKhal8VtNbsaZovq+69X5lU06inAIbgIeoOJ0DrhZwrYuj3GwHIYI26G0Wf6ak\/fVBOCpysn6jci\/FGNdlkSEkEGPma0df7gFv7HdkgfHXfLuN18HUeSa8p+4b80MwMkPIG\/TQFUJETfIz8V4rhYXv5QSPUE\/OLGd9\/7Ot+f1kaAucNHR9S\/3sMrELba+3t+w\/e0mB7FmyYDKHd9u8h0vMpVl7BVOVX3F2kqUnXY+iwtJqkQLPAI5fwZsejmHvolTOQO6fXKIIcPaLMv5kcK1J6sbRcxgDR4Rd2jR9ktBxmm\/FHvHMZon5unJq1kjQzPWEitIdJHMjAduv+4KiIs6nqpSI7841VanzW+XouJCTgfpey6DhrO9hFCIuxl0oOqcDbEdOVUucznQNbqUmGsK7tWGlPH\/9blL90sOhUCb\/MPZLBTA=&routingKey=V",
+        "expireAt": 1774856051690
+    },
+    "payload": {
+        "merchantId": "SU2601231708290817219891",
+        "merchantOrderId": "OCCULT_15_1774854836_1774854837",
+        "amount": 9900,
+        "expireAfter": 1200,
+        "metaInfo": {
+            "udf1": "VastuTool",
+            "udf2": "Order_OCCULT_15_1774854836379",
+            "udf3": "Amount_99.00",
+            "udf4": "Web",
+            "udf5": "Live"
+        },
+        "paymentFlow": {
+            "type": "PG_CHECKOUT",
+            "message": "Vastu Tool Payment OCCULT_15_1774854836379",
+            "merchantUrls": {
+                "redirectUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php?order_id=OCCULT_15_1774854836379",
+                "callbackUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php"
+            }
+        }
+    }
+}
+{
+    "time": "2026-03-30 09:18:04",
+    "url": "https:\/\/api.phonepe.com\/apis\/pg\/checkout\/v2\/pay",
+    "httpCode": 200,
+    "response": {
+        "orderId": "OMO2603301248018533037230V",
+        "state": "PENDING",
+        "redirectUrl": "https:\/\/mercury-t2.phonepe.com\/transact\/pgv3?token=hq4wOGdzX31IuPyyh7\/7AYOLiipO42P8QtgmusudZHta7zUAMbV5uMV5f6kF1hmvheryrLtNiVZMSEI9Q\/vEZxxD3wnoAOTo5ysMj2I4tVAXGYa4LKZgcn5029QNhJdgVtNbsaZovq+69X5hEE2ipgIbgIeoOJ0DrhZwrYuj3GwHIYI26G0Wf6em\/cdBOCpysn6jci\/FGNdlkSEkEGPma0df7gFv7HdkgfHXfLuN18HUeSa8p+4b80MwMkPIG\/TQFUJETfIz8V4rhYXv5QSPUE\/OLGd9\/7Ot+f1kaAucNHR9S\/3sMrELba+3t+w\/e0mB7FmyYDKHd9u8h0vMpVl7BVOVX3F2kqUnXY+iwtJqkQLPAI5fwZsejmHvolTOQO6fXKIIcPaLMv5kcK1J6sbRcxgDR4gR2Ap9ktBzhWDVN8S+EKPAxBxvxWWy7f7JrsEtB1AqccjK1OmrFde21\/GFwM1QfqiOS+HskJDB3\/d\/+7XjjcwFAzsZ7VYcEKV0Yj5jGUfduBELWfEnJpqNsiiuGj2AR+8vQ85KSVIWhBNhT6o=&routingKey=V",
+        "expireAt": 1774856281836
+    },
+    "payload": {
+        "merchantId": "SU2601231708290817219891",
+        "merchantOrderId": "CREDIT_4_17748550746_1774855076",
+        "amount": 49900,
+        "expireAfter": 1200,
+        "metaInfo": {
+            "udf1": "VastuTool",
+            "udf2": "Order_CREDIT_4_1774855074626",
+            "udf3": "Amount_499.00",
+            "udf4": "Web",
+            "udf5": "Live"
+        },
+        "paymentFlow": {
+            "type": "PG_CHECKOUT",
+            "message": "Vastu Tool Payment CREDIT_4_1774855074626",
+            "merchantUrls": {
+                "redirectUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php?order_id=CREDIT_4_1774855074626",
+                "callbackUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php"
+            }
+        }
+    }
+}
+{
+    "time": "2026-03-30 11:13:56",
+    "url": "https:\/\/api.phonepe.com\/apis\/pg\/checkout\/v2\/pay",
+    "httpCode": 0,
+    "response": null,
+    "payload": {
+        "merchantId": "SU2601231708290817219891",
+        "merchantOrderId": "OCCULT_22_1774862018_1774862019",
+        "amount": 19800,
+        "expireAfter": 1200,
+        "metaInfo": {
+            "udf1": "VastuTool",
+            "udf2": "Order_OCCULT_22_1774862018191",
+            "udf3": "Amount_198",
+            "udf4": "Web",
+            "udf5": "Live"
+        },
+        "paymentFlow": {
+            "type": "PG_CHECKOUT",
+            "message": "Vastu Tool Payment OCCULT_22_1774862018191",
+            "merchantUrls": {
+                "redirectUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php?order_id=OCCULT_22_1774862018191",
+                "callbackUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php"
+            }
+        }
+    }
+}
+{
+    "time": "2026-03-30 11:45:51",
+    "url": "https:\/\/api.phonepe.com\/apis\/pg\/checkout\/v2\/pay",
+    "httpCode": 200,
+    "response": {
+        "orderId": "OMO2603301515489631161221V",
+        "state": "PENDING",
+        "redirectUrl": "https:\/\/mercury-t2.phonepe.com\/transact\/pgv3?token=hq4wOGdzX31IuPyyh7\/7AYOLiipO42P8QtgmusudZHta7zUAMbV5uMV5f6kF1hmvheryrLtNiVZMSEI9Q\/vEZxxD3wnoAOSf8Choi2U4tVBeDM3FZ6ZgQHp1y9gAhblgVtNbsaZovq+69UB5Uk2cnAIbgIeoOJ0DrhZwrYuj3GwHIYI26G0Wc+yk7fEMOCpysn6jci\/FGNdlkSEkEGPma0df7gFv7HdkgfHXfLuN18HUeSa8p+4b80MwMkPIG\/TQFUJETfIz8V4rhYXv5QSPUE\/OLGd9\/7Ot+f1kaAucNHR9S\/3sMrELba+3t+w\/e0mB7FmyYDKHd9u8h0vMpVl7BVOVX3F2kqUnXY+iwtJqkQLPAI5fwZsejmHvolTOQO6fXKIIcPaLMv5kcK1J6sbRcxgDeYQf2iRXktBmkxXTNcuYRuKu7x1B0Hi176XojeFBNUQJN\/3cl9X7MfGl+uG9lK03fLnGeaDpqrucuPNVx7bSpNt8cQYIr0MoBYcjAhwSYnzA\/G8Ma4ZbZJ2WrFDkCgmX5yglsEutQmcbxEMa\/8E=&routingKey=V",
+        "expireAt": 1774865148946
+    },
+    "payload": {
+        "merchantId": "SU2601231708290817219891",
+        "merchantOrderId": "OCCULT_23_1774863946_1774863947",
+        "amount": 9900,
+        "expireAfter": 1200,
+        "metaInfo": {
+            "udf1": "VastuTool",
+            "udf2": "Order_OCCULT_23_1774863946937",
+            "udf3": "Amount_99",
+            "udf4": "Web",
+            "udf5": "Live"
+        },
+        "paymentFlow": {
+            "type": "PG_CHECKOUT",
+            "message": "Vastu Tool Payment OCCULT_23_1774863946937",
+            "merchantUrls": {
+                "redirectUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php?order_id=OCCULT_23_1774863946937",
+                "callbackUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php"
+            }
+        }
+    }
+}
+{
+    "time": "2026-03-30 12:47:13",
+    "url": "https:\/\/api.phonepe.com\/apis\/pg\/checkout\/v2\/pay",
+    "httpCode": 200,
+    "response": {
+        "orderId": "OMO2603301617110940862168V",
+        "state": "PENDING",
+        "redirectUrl": "https:\/\/mercury-t2.phonepe.com\/transact\/pgv3?token=hq4wOGdzX31IuPyyh7\/7AYOLiipO42P8QtgmusudZHta7zUAMbV5uMV5f6kF1hmvheryrLtNiVZMSEI9Q\/vEZxxD3wnoAOSf8Choi2U4tVBeD7rFZ6ZgQHp1y9hJhId4UdNbsaZovq+69UBXVU6iugIbgIeoOJ0DrhZwrYuj3GwHIYI26G0Wc6Wl0+1BOCpysn6jci\/FGNdlkSEkEGPma0df7gFv7HdkgfHXfLuN18HUeSa8p+4b80MwMkPIG\/TQFUJETfIz8V4rhYXv5QSPUE\/OLGd9\/7Ot+f1kaAucNHR9S\/3sMrELba+3t+w\/e0mB7FmyYDKHd9u8h0vMpVl7BVOVX3F2kqUnXY+iwtJqkQLPAI5fwZsejmHvolTOQO6fXKIIcPaLMv5kcK1J6sbRcxgDebZb2xp9ktBTlHzSK8+Kc5\/+xg1Q6WH9y+aFsdNDFC0Ad+6u\/eCuO8+pq8q8+alxYraAetX2oszOoP0r\/fSXidhhAnAb4XleDI0UeS9ydn\/l92dscOtLO9HDj0DyGkrrxnwc5JGw8oeI7fGSgio=&routingKey=V",
+        "expireAt": 1774868831070
+    },
+    "payload": {
+        "merchantId": "SU2601231708290817219891",
+        "merchantOrderId": "OCCULT_24_1774867629_1774867631",
+        "amount": 9900,
+        "expireAfter": 1200,
+        "metaInfo": {
+            "udf1": "VastuTool",
+            "udf2": "Order_OCCULT_24_1774867629828",
+            "udf3": "Amount_99",
+            "udf4": "Web",
+            "udf5": "Live"
+        },
+        "paymentFlow": {
+            "type": "PG_CHECKOUT",
+            "message": "Vastu Tool Payment OCCULT_24_1774867629828",
+            "merchantUrls": {
+                "redirectUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php?order_id=OCCULT_24_1774867629828",
+                "callbackUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php"
+            }
+        }
+    }
+}
+{
+    "time": "2026-03-30 12:48:14",
+    "url": "https:\/\/api.phonepe.com\/apis\/pg\/checkout\/v2\/pay",
+    "httpCode": 200,
+    "response": {
+        "orderId": "OMO2603301618116892717525V",
+        "state": "PENDING",
+        "redirectUrl": "https:\/\/mercury-t2.phonepe.com\/transact\/pgv3?token=hq4wOGdzX31IuPyyh7\/7AYOLiipO42P8QtgmusudZHta7zUAMbV5uMV5f6kF1hmvheryrLtNiVZMSEI9Q\/vEZxxD3wnoAOSf8Choi2U4tVBeD7rFZ6ZgQHp1y9hJhIdaHtNbsaZovq+69UBXVUyMsgIbgIeoOJ0DrhZwrYuj3GwHIYI26G0Wc6Wl08tBOCpysn6jci\/FGNdlkSEkEGPma0df7gFv7HdkgfHXfLuN18HUeSa8p+4b80MwMkPIG\/TQFUJETfIz8V4rhYXv5QSPUE\/OLGd9\/7Ot+f1kaAucNHR9S\/3sMrELba+3t+w\/e0mB7FmyYDKHd9u8h0vMpVl7BVOVX3F2kqUnXY+iwtJqkQLPAI5fwZsejmHvolTOQO6fXKIIcPaLMv5kcK1J6sbRcxgDebZc2Bp9ktB7pXn3C8aMebTt7QFN6VjiyOzWuOBGAXVaKNivyOegRoiqwva4wJY2frjSf+X0sLrg1JZgypiUhc1gChMt4RkGR6kbRQBIFkX9xXI0a59nOPOHgk3ICsBlcdFBwn5GRjKDHICcJM8=&routingKey=V",
+        "expireAt": 1774868891673
+    },
+    "payload": {
+        "merchantId": "SU2601231708290817219891",
+        "merchantOrderId": "OCCULT_24_1774867693_1774867693",
+        "amount": 9900,
+        "expireAfter": 1200,
+        "metaInfo": {
+            "udf1": "VastuTool",
+            "udf2": "Order_OCCULT_24_1774867693182",
+            "udf3": "Amount_99.00",
+            "udf4": "Web",
+            "udf5": "Live"
+        },
+        "paymentFlow": {
+            "type": "PG_CHECKOUT",
+            "message": "Vastu Tool Payment OCCULT_24_1774867693182",
+            "merchantUrls": {
+                "redirectUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php?order_id=OCCULT_24_1774867693182",
+                "callbackUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php"
+            }
+        }
+    }
+}
+{
+    "time": "2026-03-30 12:48:16",
+    "url": "https:\/\/api.phonepe.com\/apis\/pg\/checkout\/v2\/pay",
+    "httpCode": 200,
+    "response": {
+        "orderId": "OMO2603301618143878298668V",
+        "state": "PENDING",
+        "redirectUrl": "https:\/\/mercury-t2.phonepe.com\/transact\/pgv3?token=hq4wOGdzX31IuPyyh7\/7AYOLiipO42P8QtgmusudZHta7zUAMbV5uMV5f6kF1hmvheryrLtNiVZMSEI9Q\/vEZxxD3wnoAOSf8Choi2U4tVBeD7rFZ6ZgQHp1y9hJhIdaHtNbsaZovq+69UBXVUyMqgIbgIeoOJ0DrhZwrYuj3GwHIYI26G0Wc6Wl08sJOCpysn6jci\/FGNdlkSEkEGPma0df7gFv7HdkgfHXfLuN18HUeSa8p+4b80MwMkPIG\/TQFUJETfIz8V4rhYXv5QSPUE\/OLGd9\/7Ot+f1kaAucNHR9S\/3sMrELba+3t+w\/e0mB7FmyYDKHd9u8h0vMpVl7BVOVX3F2kqUnXY+iwtJqkQLPAI5fwZsejmHvolTOQO6fXKIIcPaLMv5kcK1J6sbRcxgDebZc2BpxktBXjWeCBu24ZoPwoRxx023tttb3n\/gaGn8CdcvU5YCpPI+nq9Op4bVlVYDMYO\/PsLPI2vNa55ffud8JdRkM40AvH6U\/YydPaybqulIzaaZXAtqkhjfNLKj3dasFYIfV77AIGC4MUR0=&routingKey=V",
+        "expireAt": 1774868894363
+    },
+    "payload": {
+        "merchantId": "SU2601231708290817219891",
+        "merchantOrderId": "OCCULT_24_1774867693_1774867695",
+        "amount": 9900,
+        "expireAfter": 1200,
+        "metaInfo": {
+            "udf1": "VastuTool",
+            "udf2": "Order_OCCULT_24_1774867693182",
+            "udf3": "Amount_99.00",
+            "udf4": "Web",
+            "udf5": "Live"
+        },
+        "paymentFlow": {
+            "type": "PG_CHECKOUT",
+            "message": "Vastu Tool Payment OCCULT_24_1774867693182",
+            "merchantUrls": {
+                "redirectUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php?order_id=OCCULT_24_1774867693182",
+                "callbackUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php"
+            }
+        }
+    }
+}
+{
+    "time": "2026-03-31 12:55:06",
+    "url": "https:\/\/api.phonepe.com\/apis\/pg\/checkout\/v2\/pay",
+    "httpCode": 200,
+    "response": {
+        "orderId": "OMO2603311625063571756012V",
+        "state": "PENDING",
+        "redirectUrl": "https:\/\/mercury-t2.phonepe.com\/transact\/pgv3?token=hq4wOGdzX31IuPyyh7\/7AYOLiipO42P8QtgmusudZHta7zUAMbV5uMV5f6kF1hmvheryrLtNiVZMSEI9Q\/vEZxxD3wnoAOTo5ysMj2I4tVAWGYa4LKZgcn9029BKhbl8V9NbsaZovq+79X5lV0yMpgIbgIeoOJ0DrhZwrYuj3GwHIYI26G0Gf6al7eELOCpysn6jci\/FGNdlkSEkEGPma0df7gFv7HdkgfHXfLuN18HUeSa8p+4b80MwMkPIG\/TQFUJETfIz8V4rhYXv5QSPUE\/OLGd9\/7Ot+f1kaAucNHR9S\/3sMrELba+3t+w\/e0mB7FmyYDKHd9u8h0vMpVl7BVOVX3F2kqUnXY+iwtJqkQLPAI5fwZsejmHvolTOQO6fXKIIcPaLMv5kcK1J6sbRcxkDR4Ra2yRpktB7uk\/8Suu+QIGpvBZu5GTIxNfLz+IdXFgdKLmwx9aHMIrO2MKM+o5UXsvmdv7cgrLugNd255eeufJFDCoX1X8nK4UZQDpwY0P9u0h1Y7BdO5PXs2rNCh6RIYFrqaYOXrBdsgeAygQ=&routingKey=V",
+        "expireAt": 1774955706342
+    },
+    "payload": {
+        "merchantId": "SU2601231708290817219891",
+        "merchantOrderId": "CREDIT_5_17749544937_1774954496",
+        "amount": 9900,
+        "expireAfter": 1200,
+        "metaInfo": {
+            "udf1": "VastuTool",
+            "udf2": "Order_CREDIT_5_1774954493751",
+            "udf3": "Amount_99.00",
+            "udf4": "Web",
+            "udf5": "Live"
+        },
+        "paymentFlow": {
+            "type": "PG_CHECKOUT",
+            "message": "Vastu Tool Payment CREDIT_5_1774954493751",
+            "merchantUrls": {
+                "redirectUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php?order_id=CREDIT_5_1774954493751",
+                "callbackUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php"
+            }
+        }
+    }
+}
+{
+    "time": "2026-04-07 16:09:51",
+    "url": "https:\/\/api.phonepe.com\/apis\/pg\/checkout\/v2\/pay",
+    "httpCode": 200,
+    "response": {
+        "orderId": "OMO2604071939522982898058V",
+        "state": "PENDING",
+        "redirectUrl": "https:\/\/mercury-t2.phonepe.com\/transact\/pgv3?token=hq4wOGdzX31IuPyyh7\/7AYOLiipO42P8QtgmusudZHta7zUAMbV5uMV5f6kF1hmvheryrLtNiVZMSEI9Q\/vEZxxD3wnoAOSf8Choi2U4tVBeD6rFZ6ZgQHt02+INhblWUdNbsaZovqu\/9VB1UkyMugIbgIeoOJ0DrhZwrYuj3GwHIYI26WwGSeGk7ctAOCpysn6jci\/FGNdlkSEkEGPma0df7gFv7HdkgfHXfLuN18HUeSa8p+4b80MwMkPIG\/TQFUJETfIz8V4rhYXv5QSPUE\/OLGd9\/7Ot+f1kaAucNHR9S\/3sMrELba+3t+w\/e0mB7FmyYDKHd9u8h0vMpVl7BVOVX3F2kqUnXY+iwtJqkQLPAI5fwZsejmHvolTOQO6fXKIIcPaLMv5kcK1J6sbRdx0DaZgQ2Bp5ktB7smL+OuiXEJLrxSFfy33a\/dXHsd9CFFdbc\/j\/9ti7OI6b1uiO1I1KTZzeAsvqr7LUr9xB4P\/UpvRJA38asEUmPbQHUCRaQkrkzhkhaqgtAv25o2fDLKrzCAs4NrErifGlAZ4R0aA=&routingKey=V",
+        "expireAt": 1775572192273
+    },
+    "payload": {
+        "merchantId": "SU2601231708290817219891",
+        "merchantOrderId": "OCCULT_25_1775570989_1775570991",
+        "amount": 93102,
+        "expireAfter": 1200,
+        "metaInfo": {
+            "udf1": "VastuTool",
+            "udf2": "Order_OCCULT_25_1775570989976",
+            "udf3": "Amount_931.02",
+            "udf4": "Web",
+            "udf5": "Live"
+        },
+        "paymentFlow": {
+            "type": "PG_CHECKOUT",
+            "message": "Vastu Tool Payment OCCULT_25_1775570989976",
+            "merchantUrls": {
+                "redirectUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php?order_id=OCCULT_25_1775570989976",
+                "callbackUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php"
+            }
+        }
+    }
+}
+{
+    "time": "2026-04-08 10:06:01",
+    "url": "https:\/\/api.phonepe.com\/apis\/pg\/checkout\/v2\/pay",
+    "httpCode": 200,
+    "response": {
+        "orderId": "OMO2604081336016955684168V",
+        "state": "PENDING",
+        "redirectUrl": "https:\/\/mercury-t2.phonepe.com\/transact\/pgv3?token=hq4wOGdzX31IuPyyh7\/7AYOLiipO42P8QtgmusudZHta7zUAMbV5uMV5f6kF1hmvheryrLtNiVZMSEI9Q\/vEZxxD3wnoAOSf8Choi2U4tVBeD5DFZ6ZgQHt05cxLhLlkUdNbsaZovqu89lBhVk2yugIbgIeoOJ0DrhZwrYuj3GwHIYI26Ww4Z6el7flBOCpysn6jci\/FGNdlkSEkEGPma0df7gFv7HdkgfHXfLuN18HUeSa8p+4b80MwMkPIG\/TQFUJETfIz8V4rhYXv5QSPUE\/OLGd9\/7Ot+f1kaAucNHR9S\/3sMrELba+3t+w\/e0mB7FmyYDKHd9u8h0vMpVl7BVOVX3F2kqUnXY+iwtJqkQLPAI5fwZsejmHvolTOQO6fXKIIcPaLMv5kcK1J6sbRdx4AaYhb2CR9ktBZzR\/6PMS5a7uswB167ET82tDKo9McA10LLbrClsWeA\/Oa0PeOmoEyfZbTQaCImsGJhMl2zKmWmewJE3kN6Rk0OZZ1cTkUTiD+wmgSd7soeuSHwjftPBrE4D7hYmt2fgraUZihbjo=&routingKey=V",
+        "expireAt": 1775636761677
+    },
+    "payload": {
+        "merchantId": "SU2601231708290817219891",
+        "merchantOrderId": "OCCULT_26_1775635559_1775635561",
+        "amount": 17582,
+        "expireAfter": 1200,
+        "metaInfo": {
+            "udf1": "VastuTool",
+            "udf2": "Order_OCCULT_26_1775635559458",
+            "udf3": "Amount_175.82",
+            "udf4": "Web",
+            "udf5": "Live"
+        },
+        "paymentFlow": {
+            "type": "PG_CHECKOUT",
+            "message": "Vastu Tool Payment OCCULT_26_1775635559458",
+            "merchantUrls": {
+                "redirectUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php?order_id=OCCULT_26_1775635559458",
+                "callbackUrl": "https:\/\/myvastutool.com\/myvastutool\/api\/phonepe\/callback.php"
+            }
+        }
+    }
+}

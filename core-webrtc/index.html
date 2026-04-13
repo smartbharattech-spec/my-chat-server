@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Core WebRTC - Video, Audio & Screen Share</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for premium feel -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Socket.io client -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>WebRTC Pro Suite</h1>
+            <p>Integrated Video, Audio & Screen Sharing</p>
+        </header>
+
+        <main>
+            <div class="setup-panel">
+                <div class="input-group">
+                    <label for="myId">My User ID:</label>
+                    <input type="text" id="myId" placeholder="Enter your ID (e.g. 1)">
+                </div>
+                <div class="input-group">
+                    <label for="receiverId">Receiver ID:</label>
+                    <input type="text" id="receiverId" placeholder="ID to call/share with">
+                </div>
+                <button id="connectBtn" class="primary-btn">Connect & Register</button>
+                <div id="status" class="status-indicator">Disconnected</div>
+            </div>
+
+            <div class="call-controls" id="callControls" style="display: none;">
+                <button id="startVideoBtn" class="action-btn">Video Call</button>
+                <button id="startAudioBtn" class="action-btn">Audio Call</button>
+                <button id="startShareBtn" class="action-btn">Screen Share</button>
+                <button id="stopAllBtn" class="action-btn stop">End All</button>
+            </div>
+
+            <div class="media-grid">
+                <div class="video-container">
+                    <div class="badge">LOCAL</div>
+                    <video id="localVideo" autoplay playsinline muted></video>
+                    <div class="mic-status" id="localMicStatus">Mic: On</div>
+                </div>
+                <div class="video-container">
+                    <div class="badge">REMOTE</div>
+                    <video id="remoteVideo" autoplay playsinline></video>
+                    <div class="overlay-msg" id="remoteMsg">Waiting for incoming stream...</div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

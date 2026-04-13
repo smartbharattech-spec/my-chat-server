@@ -1,0 +1,142 @@
+/* ExpertWallet.css */
+.expert-wallet-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.expert-wallet-loader-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--expert-bg);
+}
+
+.expert-wallet-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(245, 158, 11, 0.1);
+    border-top: 4px solid var(--expert-primary);
+    border-radius: 50%;
+    animation: expert-spin 1s linear infinite;
+}
+
+@keyframes expert-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Modal Styles */
+.expert-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1.5rem;
+}
+
+.expert-modal-container {
+    background: white;
+    width: 100%;
+    max-width: 450px;
+    border-radius: 28px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    animation: modal-slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modal-slide-up {
+    from { opacity: 0; transform: translateY(20px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.expert-modal-header {
+    padding: 2rem 2rem 1rem;
+}
+
+.expert-modal-title {
+    font-size: 1.75rem;
+    font-weight: 900;
+    color: #1e293b;
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+.expert-modal-body {
+    padding: 0 2rem 1.5rem;
+}
+
+.expert-modal-footer {
+    padding: 1.5rem 2rem 2.5rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+.expert-input-group {
+    margin-top: 1.5rem;
+}
+
+.expert-label {
+    display: block;
+    font-weight: 700;
+    color: #475569;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.expert-input {
+    width: 100%;
+    padding: 0.875rem 1.25rem;
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.expert-input:focus {
+    border-color: var(--expert-primary);
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.1);
+    background: white;
+}
+
+.btn-ghost {
+    background: transparent;
+    border: none;
+    color: #64748b;
+    font-weight: 700;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-ghost:hover {
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+.expert-divider {
+    height: 1px;
+    background: rgba(0, 0, 0, 0.05);
+    margin: 0 2rem;
+}
+
+@media (max-width: 640px) {
+    .expert-wallet-grid {
+        grid-template-columns: 1fr;
+    }
+}

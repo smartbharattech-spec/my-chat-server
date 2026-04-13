@@ -1,0 +1,5 @@
+hostname ftp://82.180.142.181
+username u737940041.myvastutool.com
+port 21
+Folder to upload files	public_html
+password /:V/HzB24Sex7b!P

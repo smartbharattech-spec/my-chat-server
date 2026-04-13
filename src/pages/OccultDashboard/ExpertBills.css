@@ -1,0 +1,234 @@
+/* ExpertBills.css */
+
+/* Custom Table */
+.expert-table-card {
+    background: white;
+    border-radius: 28px;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+}
+
+.expert-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.expert-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.expert-table th {
+    background-color: #f8fafc;
+    padding: 1.25rem 1.5rem;
+    font-weight: 800;
+    color: #475569;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.expert-table td {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid #f1f5f9;
+    color: #1e293b;
+    font-size: 0.95rem;
+}
+
+.expert-table tr:last-child td {
+    border-bottom: none;
+}
+
+.expert-table tr:hover td {
+    background-color: #fcfdfe;
+}
+
+/* Custom Chip/Badge */
+.expert-badge {
+    padding: 0.4rem 0.75rem;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 0.65rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.expert-badge.success {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.expert-badge.warning {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.expert-badge.error {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.expert-badge.outline {
+    background-color: transparent;
+    border: 1px solid #e2e8f0;
+    color: #64748b;
+}
+
+/* Custom Alert */
+.expert-alert-error {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    padding: 1.5rem 2rem;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 10px 25px -5px rgba(239, 68, 68, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.expert-alert-icon {
+    flex-shrink: 0;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.expert-tabs-container {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid #f1f5f9;
+    padding: 0 0.5rem;
+}
+
+.expert-tab {
+    padding: 1rem 0.5rem;
+    font-weight: 900;
+    font-size: 1.05rem;
+    color: #94a3b8;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-bottom: 4px solid transparent;
+    position: relative;
+    letter-spacing: -0.01em;
+}
+
+.expert-tab:hover {
+    color: #475569;
+}
+
+.expert-tab.active {
+    color: var(--expert-primary);
+    border-bottom-color: var(--expert-primary);
+}
+
+.expert-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--expert-primary);
+    border-radius: 4px 4px 0 0;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+}
+
+@media (max-width: 768px) {
+    .expert-table-card {
+        background: transparent;
+        border: none;
+        box-shadow: none;
+    }
+    
+    .expert-table-wrapper {
+        display: none; /* Hide table on mobile */
+    }
+}
+
+/* Card Grid Layout for Mobile */
+.expert-bills-grid {
+    display: none;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+@media (max-width: 768px) {
+    .expert-bills-grid {
+        display: flex;
+    }
+}
+
+.expert-bill-card {
+    background: white;
+    border-radius: 24px;
+    padding: 1.5rem;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.expert-bill-card:active {
+    transform: scale(0.98);
+}
+
+.expert-bill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.expert-bill-id {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+.expert-bill-activity {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+}
+
+.expert-bill-amount-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed #f1f5f9;
+}
+
+.expert-bill-amount {
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: var(--expert-primary);
+}
+
+.expert-bill-date {
+    font-size: 0.85rem;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.expert-bill-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.25rem;
+}

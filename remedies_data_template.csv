@@ -1,0 +1,10 @@
+Category,Zone_Code,Is_Positive,Remedy_Description
+Entrance,N1,0,"Blocked Money / Financial Losses. Remedy: Place a Blue or Green adhesive tape (3-4 inch wide) on the threshold."
+Entrance,N2,0,"Instability / Fear. Remedy: Place a Blue or Green adhesive tape on the threshold."
+Entrance,N3,1,"Positive Entrance. No remedy needed."
+Kitchen,N1,0,"Avoid Kitchen here. It hampers money flow."
+Kitchen,SE,1,"Best position for Kitchen (Fire zone)."
+Toilet,NE,0,"Major Vastu Defect. Causes health issues. Shift if possible."
+Toilet,SSW,1,"Best position for Toilet (Disposal zone)."
+Mandir,NE,1,"Excellent for Mandir / Meditation."
+Master Bed,SW,1,"Best for Master Bedroom (Stability)."

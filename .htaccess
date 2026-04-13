@@ -1,0 +1,40 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Don't rewrite actual files (index.html, assets, etc.)
+  RewriteRule ^index\.html$ - [L]
+
+  # Exclude /api directory from rewrites
+  RewriteCond %{REQUEST_URI} ^/api/ [NC]
+  RewriteRule ^ - [L]
+
+  # Exclude /uploads directory from rewrites
+  RewriteCond %{REQUEST_URI} ^/uploads/ [NC]
+  RewriteRule ^ - [L]
+
+  # Allow actual files and directories to be served directly
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-l
+
+  # Redirect all other routes (including @username routes) to index.html for SPA
+  RewriteRule ^ /index.html [L]
+</IfModule>
+
+# Enable CORS headers if needed
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  
+  # Prevent caching of index.html and main resources
+  <FilesMatch "\.(html|php|json)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires 0
+  </FilesMatch>
+
+  # Allow long-term caching of fingerprinted assets (JS, CSS, images)
+  <FilesMatch "\.(js|css|webp|jpg|jpeg|png|gif|svg|ico|woff|woff2|ttf|otf)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>
