@@ -22,6 +22,8 @@ async function deploy() {
         await client.uploadFrom("api/update_course_progress.php", "/public_html/api/update_course_progress.php");
         await client.uploadFrom("api/get_course_progress.php", "/public_html/api/get_course_progress.php");
         await client.uploadFrom("api/courses.php", "/public_html/api/courses.php");
+        await client.uploadFrom("api/marketplace/chat_get_conversations.php", "/public_html/api/marketplace/chat_get_conversations.php");
+        await client.uploadFrom("api/marketplace/chat_send_message.php", "/public_html/api/marketplace/chat_send_message.php");
         
         console.log("Upload completed!");
     } catch(err) {

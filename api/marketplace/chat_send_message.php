@@ -94,16 +94,20 @@ try {
 
     // 1. Get or create conversation
     if (!$conversation_id) {
-        $stmt = $pdo->prepare("SELECT id FROM chat_conversations WHERE (user_id = ? AND expert_id = ?) OR (user_id = ? AND expert_id = ?)");
+        $stmt = $pdo->prepare("SELECT id, type, expert_id FROM chat_conversations WHERE (user_id = ? AND expert_id = ?) OR (user_id = ? AND expert_id = ?)");
         $stmt->execute([$user_id, $expert_id, $expert_id, $user_id]);
         $existing = $stmt->fetch();
 
         if ($existing) {
             $conversation_id = $existing['id'];
+            $conv_type = $existing['type'];
+            $room_expert_id = $existing['expert_id'];
         } else {
             $stmt = $pdo->prepare("INSERT INTO chat_conversations (user_id, expert_id, last_message) VALUES (?, ?, ?)");
             $stmt->execute([$user_id, $expert_id, $message]);
             $conversation_id = $pdo->lastInsertId();
+            $conv_type = 'private';
+            $room_expert_id = $expert_id;
             
             // If it was a free message in a new conversation, increment the count
             if (isset($is_free_message) && $is_free_message) {
@@ -111,6 +115,22 @@ try {
                 $stmt->execute([$conversation_id]);
             }
         }
+    } else {
+        $stmt = $pdo->prepare("SELECT type, expert_id FROM chat_conversations WHERE id = ?");
+        $stmt->execute([$conversation_id]);
+        $existing = $stmt->fetch();
+        $conv_type = $existing['type'];
+        $room_expert_id = $existing['expert_id'];
+    }
+
+    // BROADCAST CHECK: If it's a broadcast room, only the expert can send messages
+    if ($conv_type === 'broadcast') {
+        if ((int)$user_id !== (int)$room_expert_id) {
+            echo json_encode(['status' => 'error', 'message' => 'Only experts can send messages in the community group.']);
+            $pdo->rollBack();
+            exit;
+        }
+        // Broadcast messages are free for experts to send
     }
 
     // 2. Insert message
@@ -122,11 +142,9 @@ try {
     $stmt = $pdo->prepare("UPDATE chat_conversations SET last_message = ? WHERE id = ?");
     $stmt->execute([$message, $conversation_id]);
 
-    // 4. Generate Admin Bill for the Expert (if message was charged)
-    if ($sender && $sender['role'] === 'user' && isset($is_free_message) && !$is_free_message) {
+    // 4. Generate Admin Bill for the Expert (if message was charged AND NOT A BROADCAST)
+    if ($conv_type === 'private' && $sender && $sender['role'] === 'user' && isset($is_free_message) && !$is_free_message) {
         require_once __DIR__ . '/billing_helper.php';
-        // The charge is based on the credits deducted from the user.
-        // Even though user pays in credits, the admin charge for the expert can be based on that.
         calculateAndGenerateBill($pdo, $expert_id, $credits_to_deduct, 'chat_message', $message_id);
     }
 
@@ -137,7 +155,8 @@ try {
         'data' => [
             'message_id' => $message_id,
             'conversation_id' => $conversation_id,
-            'created_at' => date('Y-m-d H:i:s')
+            'created_at' => date('Y-m-d H:i:s'),
+            'type' => $conv_type
         ]
     ]);
 

@@ -99,6 +99,26 @@ io.on('connection', (socket) => {
     socket.userId = userId;
     socket.join(userId); // JOIN THE USER'S OWN ROOM
     
+    // NEW: Join Broadcast Rooms
+    if (db) {
+        try {
+            if (role === 'expert') {
+                // Experts join their own broadcast room
+                socket.join(`broadcast_${userId}`);
+                console.log(`Expert ${userId} joined broadcast room broadcast_${userId}`);
+            } else {
+                // Users join broadcast rooms of experts they follow
+                const [follows] = await db.execute('SELECT expert_id FROM marketplace_follows WHERE user_id = ?', [userId]);
+                follows.forEach(f => {
+                    socket.join(`broadcast_${f.expert_id}`);
+                    console.log(`User ${userId} joined broadcast room broadcast_${f.expert_id}`);
+                });
+            }
+        } catch (err) {
+            console.error('Error joining broadcast rooms:', err);
+        }
+    }
+
     activeUsers.set(userId, { socketId: socket.id, role });
     console.log(`User ${userId} (${role}) joined room ${userId} (Socket ID: ${socket.id})`);
 
@@ -125,18 +145,31 @@ io.on('connection', (socket) => {
     const receiverId = String(data.receiverId || data.receiver_id || '');
     const senderId = String(data.senderId || data.sender_id || '');
     const conversationId = data.conversationId || data.conversation_id;
+    const isBroadcast = data.type === 'broadcast';
     
-    console.log(`Message from ${senderId} to ${receiverId}: ${data.message} (Conv: ${conversationId})`);
+    console.log(`${isBroadcast ? 'Broadcast' : 'Message'} from ${senderId} to ${receiverId}: ${data.message} (Conv: ${conversationId})`);
 
-    // Emit to the receiver's room
-    io.to(receiverId).emit('receive_message', {
-      sender_id: senderId,
-      receiver_id: receiverId,
-      message: data.message,
-      conversation_id: conversationId,
-      sender_name: data.senderName || data.sender_name,
-      created_at: new Date().toISOString()
-    });
+    if (isBroadcast) {
+        // Broadcast to entire community room
+        io.to(`broadcast_${senderId}`).emit('receive_message', {
+            sender_id: senderId,
+            message: data.message,
+            conversation_id: conversationId,
+            sender_name: data.senderName || data.sender_name,
+            type: 'broadcast',
+            created_at: new Date().toISOString()
+        });
+    } else {
+        // Emit to the receiver's private room
+        io.to(receiverId).emit('receive_message', {
+          sender_id: senderId,
+          receiver_id: receiverId,
+          message: data.message,
+          conversation_id: conversationId,
+          sender_name: data.senderName || data.sender_name,
+          created_at: new Date().toISOString()
+        });
+    }
   });
 
   socket.on('typing', (data) => {

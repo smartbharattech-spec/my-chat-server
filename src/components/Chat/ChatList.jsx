@@ -151,10 +151,22 @@ const ChatList = ({ onSelectConversation }) => {
                       sx={{ 
                         fontWeight: hasUnread || isActive ? 700 : 500, 
                         color: isActive ? '#6366f1' : '#1e293b',
-                        fontSize: '0.95rem'
+                        fontSize: '0.95rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 1
                       }}
                     >
-                      {conv.other_party_name}
+                      {conv.type === 'broadcast' ? (conv.title || "Community Room") : conv.other_party_name}
+                      {conv.type === 'broadcast' && (
+                        <Box sx={{ 
+                            fontSize: '0.6rem', fontWeight: 900, px: 0.8, py: 0.2, 
+                            bgcolor: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b', 
+                            border: '1px solid rgba(245, 158, 11, 0.2)', borderRadius: '4px'
+                        }}>
+                          COMMUNITY
+                        </Box>
+                      )}
                     </Typography>
                     <Typography variant="caption" sx={{ color: '#94a3b8', fontSize: '0.7rem', fontWeight: 600 }}>
                       {new Date(conv.last_message_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}

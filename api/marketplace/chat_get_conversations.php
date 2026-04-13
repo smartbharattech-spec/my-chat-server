@@ -16,19 +16,25 @@ try {
     if ($role === 'expert') {
         $sql = "SELECT c.*, u.name as other_party_name, u.role as other_party_role 
                 FROM chat_conversations c 
-                JOIN marketplace_users u ON c.user_id = u.id 
+                LEFT JOIN marketplace_users u ON c.user_id = u.id 
                 WHERE c.expert_id = ? 
                 ORDER BY c.last_message_time DESC";
     } else {
+        // Fetch private conversations + Broadcast rooms for experts this user follows
         $sql = "SELECT c.*, u.name as other_party_name, u.role as other_party_role 
                 FROM chat_conversations c 
                 JOIN marketplace_users u ON c.expert_id = u.id 
-                WHERE c.user_id = ? 
+                WHERE (c.user_id = ? AND c.type = 'private') OR 
+                      (c.type = 'broadcast' AND c.expert_id IN (SELECT expert_id FROM marketplace_follows WHERE user_id = ?))
                 ORDER BY c.last_message_time DESC";
     }
 
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$user_id]);
+    if ($role === 'expert') {
+        $stmt->execute([$user_id]);
+    } else {
+        $stmt->execute([$user_id, $user_id]);
+    }
     $conversations = $stmt->fetchAll();
 
     // Add unread count for each conversation

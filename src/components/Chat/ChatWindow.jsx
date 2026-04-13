@@ -390,27 +390,35 @@ const ChatWindow = ({ onClose, onBack, currentUser }) => {
               </Avatar>
             </Badge>
             <Box sx={{ ml: 1.5 }}>
-              <Typography variant="h6" sx={{ fontWeight: 700, lineHeight: 1.1, fontSize: '0.95rem' }}>{activeConversation?.other_party_name || "Expert Support"}</Typography>
-              <Typography variant="caption" sx={{ opacity: 0.9, fontWeight: 500, fontSize: '0.7rem' }}>{isTyping ? 'Typing...' : 'Live Chat'}</Typography>
+              <Typography variant="h6" sx={{ fontWeight: 700, lineHeight: 1.1, fontSize: '0.95rem' }}>
+                {activeConversation?.type === 'broadcast' ? activeConversation.title : (activeConversation?.other_party_name || "Expert Support")}
+              </Typography>
+              <Typography variant="caption" sx={{ opacity: 0.9, fontWeight: 500, fontSize: '0.7rem' }}>
+                {activeConversation?.type === 'broadcast' ? 'Broadcast Channel' : (isTyping ? 'Typing...' : 'Live Chat')}
+              </Typography>
             </Box>
           </Box>
         </Box>
         <Box sx={{ display: 'flex', gap: 0.5 }}>
-          <Tooltip title="Audio Call">
-            <IconButton size="small" onClick={startAudioCall} sx={{ color: 'white', bgcolor: 'rgba(255,255,255,0.1)', '&:hover': { bgcolor: 'rgba(255,255,255,0.25)' }, width: 32, height: 32, mr: 0.5 }}>
-              <CallIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Video Call">
-            <IconButton size="small" onClick={startVideoCall} sx={{ color: 'white', bgcolor: 'rgba(255,255,255,0.1)', '&:hover': { bgcolor: 'rgba(255,255,255,0.25)' }, width: 32, height: 32, mr: 0.5 }}>
-              <VideocamIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Share Screen">
-            <IconButton size="small" onClick={startScreenShare} sx={{ color: 'white', bgcolor: 'rgba(255,255,255,0.1)', '&:hover': { bgcolor: 'rgba(255,255,255,0.25)' }, width: 32, height: 32, mr: 0.5 }}>
-              <ScreenShareIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
+          {activeConversation?.type !== 'broadcast' && (
+            <>
+              <Tooltip title="Audio Call">
+                <IconButton size="small" onClick={startAudioCall} sx={{ color: 'white', bgcolor: 'rgba(255,255,255,0.1)', '&:hover': { bgcolor: 'rgba(255,255,255,0.25)' }, width: 32, height: 32, mr: 0.5 }}>
+                  <CallIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Video Call">
+                <IconButton size="small" onClick={startVideoCall} sx={{ color: 'white', bgcolor: 'rgba(255,255,255,0.1)', '&:hover': { bgcolor: 'rgba(255,255,255,0.25)' }, width: 32, height: 32, mr: 0.5 }}>
+                  <VideocamIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Share Screen">
+                <IconButton size="small" onClick={startScreenShare} sx={{ color: 'white', bgcolor: 'rgba(255,255,255,0.1)', '&:hover': { bgcolor: 'rgba(255,255,255,0.25)' }, width: 32, height: 32, mr: 0.5 }}>
+                  <ScreenShareIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
+            </>
+          )}
           <IconButton size="small" onClick={onClose} sx={{ color: 'white', '&:hover': { bgcolor: 'rgba(255,255,255,0.2)' } }}>
             <CloseIcon fontSize="small" />
           </IconButton>
@@ -424,6 +432,11 @@ const ChatWindow = ({ onClose, onBack, currentUser }) => {
             return (
               <Box key={idx} sx={{ alignSelf: isMe ? 'flex-end' : 'flex-start', maxWidth: '80%' }}>
                 <Paper sx={{ p: 1.5, px: 2, borderRadius: 3, bgcolor: isMe ? '#8b5cf6' : 'white', color: isMe ? 'white' : 'inherit', border: isMe ? 'none' : '1px solid #e2e8f0', boxShadow: '0 2px 5px rgba(0,0,0,0.05)' }}>
+                  {!isMe && activeConversation?.type === 'broadcast' && (
+                      <Typography variant="caption" sx={{ color: '#f59e0b', fontWeight: 900, mb: 0.5, display: 'block', fontSize: '0.65rem' }}>
+                          EXPERT • {activeConversation.other_party_name}
+                      </Typography>
+                  )}
                   <Typography variant="body2">{msg.message}</Typography>
                   
                   {/* Join buttons for different call types */}
@@ -474,21 +487,33 @@ const ChatWindow = ({ onClose, onBack, currentUser }) => {
         bgcolor: 'white', 
         borderTop: '1px solid #e2e8f0' 
       }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, bgcolor: '#f1f5f9', p: '2px 8px', borderRadius: 10 }}>
-          <Tooltip title="Audio Call"><IconButton size="small" onClick={startAudioCall} sx={{ color: '#8b5cf6' }}><CallIcon fontSize="small" /></IconButton></Tooltip>
-          <Tooltip title="Video Call"><IconButton size="small" onClick={startVideoCall} sx={{ color: '#8b5cf6' }}><VideocamIcon fontSize="small" /></IconButton></Tooltip>
-          <Tooltip title="Share Screen"><IconButton size="small" onClick={startScreenShare} sx={{ color: '#10b981' }}><ScreenShareIcon fontSize="small" /></IconButton></Tooltip>
-          <TextField 
-            fullWidth 
-            variant="standard" 
-            placeholder="Type a message..." 
-            value={inputValue} 
-            onChange={onInputChange} 
-            onKeyPress={handleKeyPress}
-            InputProps={{ disableUnderline: true, sx: { px: 1, fontSize: '0.9rem' } }}
-          />
-          <IconButton onClick={handleSend} disabled={!inputValue.trim()} sx={{ color: '#8b5cf6' }}><SendIcon /></IconButton>
-        </Box>
+        {activeConversation?.type === 'broadcast' && currentUser?.role !== 'expert' ? (
+            <Box sx={{ textAlign: 'center', p: 1, bgcolor: '#f8fafc', borderRadius: 4, border: '1px dashed #cbd5e1' }}>
+                <Typography variant="caption" sx={{ color: '#64748b', fontWeight: 700 }}>
+                    This is a broadcast channel. Only experts can send messages here.
+                </Typography>
+            </Box>
+        ) : (
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, bgcolor: '#f1f5f9', p: '2px 8px', borderRadius: 10 }}>
+                {activeConversation?.type !== 'broadcast' && (
+                    <>
+                        <Tooltip title="Audio Call"><IconButton size="small" onClick={startAudioCall} sx={{ color: '#8b5cf6' }}><CallIcon fontSize="small" /></IconButton></Tooltip>
+                        <Tooltip title="Video Call"><IconButton size="small" onClick={startVideoCall} sx={{ color: '#8b5cf6' }}><VideocamIcon fontSize="small" /></IconButton></Tooltip>
+                        <Tooltip title="Share Screen"><IconButton size="small" onClick={startScreenShare} sx={{ color: '#10b981' }}><ScreenShareIcon fontSize="small" /></IconButton></Tooltip>
+                    </>
+                )}
+                <TextField 
+                    fullWidth 
+                    variant="standard" 
+                    placeholder="Type a message..." 
+                    value={inputValue} 
+                    onChange={onInputChange} 
+                    onKeyPress={handleKeyPress}
+                    InputProps={{ disableUnderline: true, sx: { px: 1, fontSize: '0.9rem' } }}
+                />
+                <IconButton onClick={handleSend} disabled={!inputValue.trim()} sx={{ color: '#8b5cf6' }}><SendIcon /></IconButton>
+            </Box>
+        )}
       </Box>
 
       {/* Render Screen Share via Portal (Breaks out of container) */}
