@@ -89,7 +89,7 @@ const AdminPlans = () => {
     const AVAILABLE_TOOLS = [
         { id: 1, name: "Center of Gravity (CG)" },
         { id: 2, name: "Shakti Chakra" },
-        { id: 3, name: "Basic Vastu Analysis" },
+        { id: 3, name: "Remedies Analysis" },
         { id: 4, name: "Marma Marking" },
         { id: 5, name: "Zone Wise Area" },
         { id: 6, name: "Devtas" },

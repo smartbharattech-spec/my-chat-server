@@ -483,7 +483,7 @@ export default function Plans() {
                       const TOOL_NAMES = {
                         1: "Center of Gravity",
                         2: "Shakti Chakra",
-                        3: "Basic Vastu",
+                        3: "Remedies Analysis",
                         4: "Marma Marking",
                         5: "Zone Areas",
                         6: "Devtas"

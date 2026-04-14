@@ -239,7 +239,7 @@ export default function AdminEntranceRemedies() {
                                 {category} Remedies
                             </Typography>
                             <Typography variant="body2" sx={{ color: "#7c2d12", opacity: 0.8, fontWeight: 500 }}>
-                                Admin Panel / Basic Vastu / {category}
+                                Admin Panel / Remedies / {category}
                             </Typography>
                         </Box>
 

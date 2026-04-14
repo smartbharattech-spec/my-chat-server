@@ -37,7 +37,7 @@ const VASTU_TOOLS = [
     "General",
     "Center",
     "Shakti Chakra",
-    "Basic Vastu Analysis",
+    "Remedies Analysis",
     "Marma Marking",
     "Zone Wise Area",
     "Devta Mandala"

@@ -463,7 +463,7 @@ export default function ReportOptions({
 
       <List disablePadding>
         {[
-          { name: "Basic Vastu Marking", type: "basic", color: "#3b82f6", desc: "Main layout with entrances and components." },
+          { name: "Remedies Marking", type: "basic", color: "#3b82f6", desc: "Main layout with entrances and components." },
           { name: "Shakti Chakra", type: "shakti", color: "#8b5cf6", desc: "Clean Shakti Chakra map with 16/32 zones." },
           { name: "Marma Energy Map", type: "marma", color: "#ef4444", desc: "Detailed Marma points and energy lines." },
           { name: "Zone Area Analysis", type: "zone", color: "#10b981", desc: "Zone-wise area distribution and chart." },

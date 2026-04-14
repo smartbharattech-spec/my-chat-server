@@ -1162,16 +1162,16 @@ export default function ToolModules({
           </Accordion>
         </Box>
 
-        {/* --- 3. BASIC VASTU ANALYSIS (MULTIPLE ENTRANCE SUPPORT) --- */}
+        {/* --- 3. REMEDIES ANALYSIS (MULTIPLE ENTRANCE SUPPORT) --- */}
 
         <Box onClickCapture={!hasAccess(3) ? handleLockedClick : undefined} sx={{ cursor: !hasAccess(3) ? 'pointer' : 'default' }}>
           <Accordion sx={accordionStyle} disabled={!hasAccess(3)}>
             <AccordionSummary expandIcon={hasAccess(3) ? <ExpandMoreIcon sx={{ color: "#f97316" }} /> : <LockIcon sx={{ color: "#94a3b8", fontSize: 20 }} />}>
               <Box sx={summaryHeaderStyle}>
                 <Box sx={stepCircleStyle}>2</Box>
-                                <Typography fontWeight={700} color={hasAccess(3) ? "#334155" : "#94a3b8"} sx={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>Basic Vastu Analysis</Typography>
+                                <Typography fontWeight={700} color={hasAccess(3) ? "#334155" : "#94a3b8"} sx={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>Remedies Analysis</Typography>
               </Box>
-              <TutorialButton toolName="Basic Vastu Analysis" tutorials={tutorials} onClick={playTutorialForTool} />
+              <TutorialButton toolName="Remedies Analysis" tutorials={tutorials} onClick={playTutorialForTool} />
             </AccordionSummary>
             <AccordionDetails>              <Typography fontSize={11} color="text.secondary" sx={{ mb: 2, fontStyle: 'italic' }}>
               Click a button below, then mark a point, line, or polygon on the layout.

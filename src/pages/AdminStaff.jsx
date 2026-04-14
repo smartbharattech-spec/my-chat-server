@@ -55,7 +55,7 @@ const PERMISSIONS = [
     { id: 'projects', label: 'Vastu Projects' },
     { id: 'plans', label: 'Subscription Plans' },
     { id: 'payments', label: 'Payment Approvals' },
-    { id: 'remedies', label: 'Basic Vastu (Remedies)' },
+    { id: 'remedies', label: 'Remedies' },
     { id: 'staff', label: 'Staff Management' },
     { id: 'followups', label: 'My Follow-ups' },
     { id: 'followup_requests', label: 'Follow-up Requests' }
