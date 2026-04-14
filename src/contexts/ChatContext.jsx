@@ -780,6 +780,7 @@ export const ChatProvider = ({ children, currentUser }) => {
   // ─── VIDEO / AUDIO CALLING ─────────────────────────────────────────────
   const getCallReceiverId = () => {
     if (!activeConversation) return null;
+    if (activeConversation.type === 'broadcast') return null;
     const uid = String(activeConversation.user_id);
     const eid = String(activeConversation.expert_id);
     const me = String(currentId);
@@ -803,8 +804,10 @@ export const ChatProvider = ({ children, currentUser }) => {
       if (event.candidate && socket) {
         socket.emit('call_candidate', {
           candidate: event.candidate,
-          receiverId: String(receiverId),
-          senderId: String(currentId)
+          receiverId: receiverId ? String(receiverId) : null,
+          senderId: String(currentId),
+          isBroadcast: activeConversation?.type === 'broadcast',
+          role: currentUser?.role
         });
       }
     };
@@ -832,7 +835,9 @@ export const ChatProvider = ({ children, currentUser }) => {
   const startVideoCall = async () => {
     if (!activeConversation || !socket) { showToast('Please open a conversation first', 'error'); return; }
     const receiverId = getCallReceiverId();
-    if (!receiverId) { showToast('Cannot determine call target', 'error'); return; }
+    const isBroadcast = activeConversation.type === 'broadcast';
+    
+    if (!receiverId && !isBroadcast) { showToast('Cannot determine call target', 'error'); return; }
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
       setLocalCallStream(stream);
@@ -846,10 +851,11 @@ export const ChatProvider = ({ children, currentUser }) => {
       await pc.setLocalDescription(offer);
       socket.emit('call_offer', {
         offer: pc.localDescription,
-        receiverId: String(receiverId),
+        receiverId: receiverId ? String(receiverId) : null,
         senderId: String(currentId),
-        callerName: currentUser?.name || 'User',
-        callType: 'video'
+        callerName: isBroadcast ? 'Expert' : (currentUser?.name || 'User'),
+        callType: 'video',
+        isBroadcast: isBroadcast
       });
       sendMessage('📹 Started a video call. Join to connect.');
     } catch(err) {
@@ -861,7 +867,9 @@ export const ChatProvider = ({ children, currentUser }) => {
   const startAudioCall = async () => {
     if (!activeConversation || !socket) { showToast('Please open a conversation first', 'error'); return; }
     const receiverId = getCallReceiverId();
-    if (!receiverId) { showToast('Cannot determine call target', 'error'); return; }
+    const isBroadcast = activeConversation.type === 'broadcast';
+    
+    if (!receiverId && !isBroadcast) { showToast('Cannot determine call target', 'error'); return; }
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: false, audio: true });
       setLocalCallStream(stream);
@@ -875,10 +883,11 @@ export const ChatProvider = ({ children, currentUser }) => {
       await pc.setLocalDescription(offer);
       socket.emit('call_offer', {
         offer: pc.localDescription,
-        receiverId: String(receiverId),
+        receiverId: receiverId ? String(receiverId) : null,
         senderId: String(currentId),
-        callerName: currentUser?.name || 'User',
-        callType: 'audio'
+        callerName: isBroadcast ? 'Expert' : (currentUser?.name || 'User'),
+        callType: 'audio',
+        isBroadcast: isBroadcast
       });
       sendMessage('📞 Started an audio call. Join to connect.');
     } catch(err) {
@@ -898,10 +907,12 @@ export const ChatProvider = ({ children, currentUser }) => {
     stopTitleBlink();
     if (!callPendingOffer.current) {
       if (socket && activeConversation) {
-        const receiverId = activeConversation.user_id === currentId ? activeConversation.expert_id : activeConversation.user_id;
+        const isBroadcast = activeConversation.type === 'broadcast';
+        const receiverId = isBroadcast ? activeConversation.expert_id : (activeConversation.user_id === currentId ? activeConversation.expert_id : activeConversation.user_id);
         socket.emit('request_call_offer', {
           receiverId: String(receiverId),
-          senderId: String(currentId)
+          senderId: String(currentId),
+          isBroadcast: isBroadcast
         });
         showToast("Requesting to join call... please wait.", "info");
       } else {

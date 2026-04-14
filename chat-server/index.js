@@ -236,8 +236,14 @@ io.on('connection', (socket) => {
   // ─── Video / Audio Call Signaling ──────────────────────────────────────────
   socket.on('call_offer', (data) => {
     const receiverId = String(data.receiverId || '');
-    console.log(`[CALL] call_offer from ${data.senderId} to ${receiverId} (type: ${data.callType})`);
-    io.to(receiverId).emit('call_offer', data);
+    const isBroadcast = data.isBroadcast || false;
+    console.log(`[CALL] call_offer from ${data.senderId} to ${receiverId} (type: ${data.callType}, broadcast: ${isBroadcast})`);
+    
+    if (isBroadcast) {
+      io.to(`broadcast_${data.senderId}`).emit('call_offer', data);
+    } else {
+      io.to(receiverId).emit('call_offer', data);
+    }
   });
 
   socket.on('call_answer', (data) => {
@@ -248,13 +254,24 @@ io.on('connection', (socket) => {
 
   socket.on('call_candidate', (data) => {
     const receiverId = String(data.receiverId || '');
-    io.to(receiverId).emit('call_candidate', data);
+    const isBroadcast = data.isBroadcast || false;
+    if (isBroadcast && data.role === 'expert') {
+        io.to(`broadcast_${data.senderId}`).emit('call_candidate', data);
+    } else {
+        io.to(receiverId).emit('call_candidate', data);
+    }
   });
 
   socket.on('call_end', (data) => {
     const receiverId = String(data.receiverId || '');
+    const isBroadcast = data.isBroadcast || false;
     console.log(`[CALL] call_end from ${data.senderId} to ${receiverId}`);
-    io.to(receiverId).emit('call_end', data);
+    
+    if (isBroadcast) {
+        io.to(`broadcast_${data.senderId}`).emit('call_end', data);
+    } else {
+        io.to(receiverId).emit('call_end', data);
+    }
   });
 
   socket.on('call_rejected', (data) => {
