@@ -28,6 +28,7 @@ export const ChatProvider = ({ children, currentUser }) => {
   const [screenShareStatus, setScreenShareStatus] = useState("idle"); // idle, starting, checking, connected, disconnected, failed
   const [iceConnectionState, setIceConnectionState] = useState("new");
   const iceCandidatesReceived = useRef([]);
+  const isAutoAcceptingCall = useRef(false);
   const candidatesQueue = useRef([]);
   const pcRef = useRef(null);
   const { showToast } = useToast();
@@ -199,6 +200,14 @@ export const ChatProvider = ({ children, currentUser }) => {
           if (data.callType === 'video') setIsVideoCallIncoming(true);
           else setIsAudioCallIncoming(true);
           setCallStatus('ringing');
+
+          // AUTO-ACCEPT if we were waiting for it
+          if (isAutoAcceptingCall.current) {
+            console.log("[CALL] Auto-accepting incoming re-offer...");
+            isAutoAcceptingCall.current = false;
+            setTimeout(() => acceptCall(), 500);
+            return;
+          }
 
           // Play ringtone
           const playRingtone = () => {
@@ -909,6 +918,7 @@ export const ChatProvider = ({ children, currentUser }) => {
       if (socket && activeConversation) {
         const isBroadcast = activeConversation.type === 'broadcast';
         const receiverId = isBroadcast ? activeConversation.expert_id : (activeConversation.user_id === currentId ? activeConversation.expert_id : activeConversation.user_id);
+        isAutoAcceptingCall.current = true;
         socket.emit('request_call_offer', {
           receiverId: String(receiverId),
           senderId: String(currentId),

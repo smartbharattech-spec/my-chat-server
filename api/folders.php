@@ -23,13 +23,39 @@ switch ($method) {
         }
 
         try {
-            $stmt = $pdo->prepare("SELECT f.*, (SELECT COUNT(*) FROM projects p WHERE p.folder_id = f.id) as project_count FROM workspace_folders f WHERE f.user_email = ? ORDER BY f.created_at DESC");
-            $stmt->execute([$email]);
+            // Function to get all possible IDs for an email
+            $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ? UNION SELECT id FROM marketplace_users WHERE email = ?");
+            $stmt->execute([$email, $email]);
+            $userIds = array_unique(array_map('intval', $stmt->fetchAll(PDO::FETCH_COLUMN)));
+            
+            // Fetch folders with project counts (using the same ownership filter as projects.php)
+            $ownershipWhere = "";
+            $params_own = [$email];
+            if (!empty($userIds)) {
+                $placeholders = str_repeat('?,', count($userIds) - 1) . '?';
+                $ownershipWhere = "AND (p.follower_id IN ($placeholders) OR p.expert_id IN ($placeholders) OR p.email = ?)";
+                $params_own = array_merge($userIds, $userIds, [$email]);
+            } else {
+                $ownershipWhere = "AND p.email = ?";
+            }
+
+            $folderSql = "SELECT f.*, 
+                         (SELECT COUNT(*) FROM projects p WHERE p.folder_id = f.id $ownershipWhere) as project_count 
+                         FROM workspace_folders f WHERE f.user_email = ? ORDER BY f.created_at DESC";
+            $stmt = $pdo->prepare($folderSql);
+            $stmt->execute(array_merge($params_own, [$email]));
             $folders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            // Also count projects in root (for current user)
-            $rootStmt = $pdo->prepare("SELECT COUNT(*) FROM projects WHERE email = ? AND folder_id IS NULL");
-            $rootStmt->execute([$email]);
+            // Fetch root count (projects with NO folder_id) using ownership logic
+            if (!empty($userIds)) {
+                $placeholders = str_repeat('?,', count($userIds) - 1) . '?';
+                $rootSql = "SELECT COUNT(*) FROM projects WHERE folder_id IS NULL AND (follower_id IN ($placeholders) OR expert_id IN ($placeholders) OR email = ?)";
+                $rootStmt = $pdo->prepare($rootSql);
+                $rootStmt->execute(array_merge($userIds, $userIds, [$email]));
+            } else {
+                $rootStmt = $pdo->prepare("SELECT COUNT(*) FROM projects WHERE folder_id IS NULL AND email = ?");
+                $rootStmt->execute([$email]);
+            }
             $rootCount = $rootStmt->fetchColumn();
 
             echo json_encode(["status" => "success", "data" => $folders, "root_count" => (int)$rootCount]);

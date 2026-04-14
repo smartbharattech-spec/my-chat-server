@@ -93,47 +93,114 @@ switch ($method) {
         } else {
             // Fetch projects with pagination and filters
             try {
+                $email = $_GET['email'] ?? null;
+                $search = $_GET['search'] ?? null;
+                $status = $_GET['status'] ?? 'all';
+                $construction_type = $_GET['construction_type'] ?? 'all';
+                $start_date = $_GET['start_date'] ?? null;
+                $end_date = $_GET['end_date'] ?? null;
+                $folder_id = $_GET['folder_id'] ?? null;
                 $follower_id = $_GET['follower_id'] ?? null;
-                $followerJoin = "LEFT JOIN marketplace_users fu ON p.follower_id = fu.id";
+                $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+                $offset = ($page - 1) * $limit;
 
-                if (!empty($follower_id)) {
-                    $stmt = $pdo->prepare("SELECT p.*, u.name as expert_name, fu.name as follower_name FROM projects p 
-                                          LEFT JOIN marketplace_users u ON p.expert_id = u.id 
-                                          $followerJoin
-                                          WHERE p.follower_id = ?
-                                          ORDER BY p.created_at DESC");
-                    $stmt->execute([$follower_id]);
-                    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    echo json_encode(["status" => "success", "data" => $results]);
-                } elseif (!empty($email)) {
+                $where = [];
+                $params = [];
+
+                // Base ownership filter
+                if (!empty($email)) {
                     $userIds = getUserIdsByEmail($pdo, $email);
-                    $sql = "SELECT p.*, u.name as expert_name, fu.name as follower_name FROM projects p 
-                            LEFT JOIN marketplace_users u ON p.expert_id = u.id
-                            $followerJoin";
-                    $params = [];
-
                     if (!empty($userIds)) {
                         $placeholders = str_repeat('?,', count($userIds) - 1) . '?';
-                        $sql .= " WHERE (p.follower_id IN ($placeholders) OR p.expert_id IN ($placeholders) OR p.email = ?)";
-                        $params = array_merge($userIds, $userIds, [$email]);
+                        $where[] = "(p.follower_id IN ($placeholders) OR p.expert_id IN ($placeholders) OR p.email = ?)";
+                        $params = array_merge($params, $userIds, $userIds, [$email]);
                     } else {
-                        $sql .= " WHERE p.email = ?";
-                        $params = [$email];
+                        $where[] = "p.email = ?";
+                        $params[] = $email;
                     }
-
-                    $sql .= " ORDER BY p.created_at DESC";
-                    $stmt = $pdo->prepare($sql);
-                    $stmt->execute($params);
-                    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    echo json_encode(["status" => "success", "data" => $results]);
-                } else {
-                    $stmt = $pdo->query("SELECT p.*, u.name as expert_name, fu.name as follower_name FROM projects p 
-                                        LEFT JOIN marketplace_users u ON p.expert_id = u.id 
-                                        $followerJoin
-                                        ORDER BY p.created_at DESC");
-                    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    echo json_encode(["status" => "success", "data" => $results]);
                 }
+
+                // Follower Filter
+                if (!empty($follower_id)) {
+                    $where[] = "p.follower_id = ?";
+                    $params[] = $follower_id;
+                }
+
+                // Folder Filter
+                if (isset($_GET['folder_id']) && $_GET['folder_id'] !== '') {
+                    $fid = $_GET['folder_id'];
+                    if ($fid === 'root' || $fid === 'null') {
+                        $where[] = "p.folder_id IS NULL";
+                    } else {
+                        $where[] = "p.folder_id = ?";
+                        $params[] = $fid;
+                    }
+                }
+
+                // Search Filter
+                if (!empty($search)) {
+                    $where[] = "(p.project_name LIKE ? OR p.email LIKE ?)";
+                    $params[] = "%$search%";
+                    $params[] = "%$search%";
+                }
+
+                // Status Filter (Paid/Unpaid)
+                if ($status === 'paid') {
+                    $where[] = "p.plan_id IS NOT NULL";
+                } elseif ($status === 'unpaid') {
+                    $where[] = "p.plan_id IS NULL";
+                }
+
+                // Construction Type Filter
+                if ($construction_type !== 'all') {
+                    $where[] = "p.construction_type = ?";
+                    $params[] = $construction_type;
+                }
+
+                // Date Filters
+                if (!empty($start_date)) {
+                    $where[] = "p.created_at >= ?";
+                    $params[] = $start_date . " 00:00:00";
+                }
+                if (!empty($end_date)) {
+                    $where[] = "p.created_at <= ?";
+                    $params[] = $end_date . " 23:59:59";
+                }
+
+                $whereSql = !empty($where) ? "WHERE " . implode(" AND ", $where) : "";
+
+                // Get Total Count with identical filtering
+                $countSql = "SELECT COUNT(*) FROM projects p $whereSql";
+                $countStmt = $pdo->prepare($countSql);
+                $countStmt->execute($params);
+                $total = (int)$countStmt->fetchColumn();
+
+                // Get Paginated Data
+                $sql = "SELECT p.*, u.name as expert_name, fu.name as follower_name FROM projects p 
+                        LEFT JOIN marketplace_users u ON p.expert_id = u.id 
+                        LEFT JOIN marketplace_users fu ON p.follower_id = fu.id
+                        $whereSql
+                        ORDER BY p.created_at DESC 
+                        LIMIT $limit OFFSET $offset";
+                
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute($params);
+                $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                // DEBUG/SAFETY FALLBACK: If total is 0 but results are found, use count(results)
+                // This handles edge cases where COUNT might behave differently (though unlikely here)
+                if ($total === 0 && count($results) > 0) {
+                    $total = count($results);
+                }
+
+                echo json_encode([
+                    "status" => "success", 
+                    "data" => $results,
+                    "total" => $total,
+                    "page" => $page,
+                    "limit" => $limit
+                ]);
             } catch (PDOException $e) {
                 echo json_encode(["status" => "error", "message" => $e->getMessage()]);
             }

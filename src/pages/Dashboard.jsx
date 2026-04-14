@@ -218,6 +218,8 @@ function Dashboard() {
 
   // --- FETCH PROJECTS ---
   const fetchProjects = async (email, query = searchQuery) => {
+    setProjects([]); // Clear old list immediately to prevent race conditions
+    setTotalProjects(0);
     try {
       const params = new URLSearchParams({
         email: email,
@@ -228,7 +230,7 @@ function Dashboard() {
         construction_type: typeFilter,
         start_date: startDate,
         end_date: endDate,
-        folder_id: currentFolderId || 'root',
+        folder_id: currentFolderId !== null ? currentFolderId : 'root',
         follower_id: filterFollowerId === "all" ? "" : filterFollowerId
       });
 
@@ -1712,9 +1714,9 @@ function Dashboard() {
                           }}
                         />
                       )}
-                      {currentFolderId && folders.find(f => f.id === currentFolderId) && (
+                      {currentFolderId !== null && folders.find(f => String(f.id) === String(currentFolderId)) && (
                         <Typography sx={{ color: '#9a3412', fontWeight: 700 }}>
-                          / {folders.find(f => f.id === currentFolderId).folder_name}
+                          / {folders.find(f => String(f.id) === String(currentFolderId)).folder_name}
                         </Typography>
                       )}
                       <Chip
@@ -1755,7 +1757,7 @@ function Dashboard() {
                         <Grid item xs={6} sm={4} md={3}>
                           <Card
                             elevation={0}
-                            onClick={() => setCurrentFolderId(null)}
+                            onClick={() => { setCurrentFolderId(null); setPage(0); }}
                             sx={{
                               p: 2,
                               borderRadius: "16px",
@@ -1791,12 +1793,12 @@ function Dashboard() {
                           <Grid item xs={6} sm={4} md={3} key={folder.id}>
                             <Card
                               elevation={0}
-                              onClick={() => setCurrentFolderId(folder.id)}
+                              onClick={() => { setCurrentFolderId(folder.id); setPage(0); }}
                               sx={{
                                 p: 2,
                                 borderRadius: "16px",
-                                border: currentFolderId === folder.id ? "2px solid #f97316" : "1px solid #fed7aa",
-                                bgcolor: currentFolderId === folder.id ? "#fff7ed" : "white",
+                                border: (currentFolderId !== null && String(currentFolderId) === String(folder.id)) ? "2px solid #f97316" : "1px solid #fed7aa",
+                                bgcolor: (currentFolderId !== null && String(currentFolderId) === String(folder.id)) ? "#fff7ed" : "white",
                                 cursor: 'pointer',
                                 transition: 'all 0.2s',
                                 '&:hover': {
