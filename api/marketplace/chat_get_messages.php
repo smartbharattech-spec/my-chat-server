@@ -12,10 +12,39 @@ if (!$conversation_id || !$user_id) {
 }
 
 try {
-    // Verify user belongs to this conversation
-    $verifyStmt = $pdo->prepare("SELECT id FROM chat_conversations WHERE id = ? AND (user_id = ? OR expert_id = ?)");
-    $verifyStmt->execute([$conversation_id, $user_id, $user_id]);
-    if (!$verifyStmt->fetch()) {
+    // Verify user belongs to this conversation or follows the expert for broadcast
+    $verifyStmt = $pdo->prepare("SELECT id, type, expert_id FROM chat_conversations WHERE id = ?");
+    $verifyStmt->execute([$conversation_id]);
+    $conv = $verifyStmt->fetch();
+
+    if (!$conv) {
+        echo json_encode(['status' => 'error', 'message' => 'Conversation not found.']);
+        exit;
+    }
+
+    $isAuthorized = false;
+    if ($conv['type'] === 'broadcast') {
+        // For broadcast: Authorize if user is the expert OR is a follower
+        if ((int)$conv['expert_id'] === $user_id) {
+            $isAuthorized = true;
+        } else {
+            $followStmt = $pdo->prepare("SELECT user_id FROM marketplace_follows WHERE user_id = ? AND expert_id = ?");
+            $followStmt->execute([$user_id, $conv['expert_id']]);
+            if ($followStmt->fetch()) {
+                $isAuthorized = true;
+            }
+        }
+    } else {
+        // For private: Authorize if user is either participant
+        // Get the full conv data to check both columns
+        $fullConvStmt = $pdo->prepare("SELECT id FROM chat_conversations WHERE id = ? AND (user_id = ? OR expert_id = ?)");
+        $fullConvStmt->execute([$conversation_id, $user_id, $user_id]);
+        if ($fullConvStmt->fetch()) {
+            $isAuthorized = true;
+        }
+    }
+
+    if (!$isAuthorized) {
         echo json_encode(['status' => 'error', 'message' => 'Unauthorized access to conversation.']);
         exit;
     }

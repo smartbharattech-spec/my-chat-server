@@ -262,6 +262,12 @@ io.on('connection', (socket) => {
     console.log(`[CALL] call_rejected from ${data.senderId} to ${receiverId}`);
     io.to(receiverId).emit('call_rejected', data);
   });
+
+  socket.on('request_call_offer', (data) => {
+    const receiverId = String(data.receiverId || '');
+    console.log(`[CALL] request_call_offer from ${data.senderId} to ${receiverId}`);
+    io.to(receiverId).emit('request_call_offer', data);
+  });
   // ───────────────────────────────────────────────────────────────────────────
 
   socket.on('disconnect', async () => {

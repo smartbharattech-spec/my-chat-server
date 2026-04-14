@@ -8,8 +8,10 @@ $expert_id = isset($input['expert_id']) ? (int)$input['expert_id'] : 0;
 $conversation_id = isset($input['conversation_id']) ? (int)$input['conversation_id'] : 0;
 $message = isset($input['message']) ? trim($input['message']) : '';
 
-if (!$user_id || (!$expert_id && !$conversation_id) || empty($message)) {
-    echo json_encode(['status' => 'error', 'message' => 'Sender ID, Message, and either Expert ID or Conversation ID are required.']);
+$file_url = isset($input['file_url']) ? $input['file_url'] : null;
+
+if (!$user_id || (!$expert_id && !$conversation_id) || (empty($message) && empty($file_url))) {
+    echo json_encode(['status' => 'error', 'message' => 'Sender ID, Message (or File), and either Expert ID or Conversation ID are required.']);
     exit;
 }
 
@@ -133,14 +135,17 @@ try {
         // Broadcast messages are free for experts to send
     }
 
+    $file_url = isset($input['file_url']) ? $input['file_url'] : null;
+    
     // 2. Insert message
-    $stmt = $pdo->prepare("INSERT INTO chat_messages (conversation_id, sender_id, message) VALUES (?, ?, ?)");
-    $stmt->execute([$conversation_id, $user_id, $message]);
+    $stmt = $pdo->prepare("INSERT INTO chat_messages (conversation_id, sender_id, message, file_path) VALUES (?, ?, ?, ?)");
+    $stmt->execute([$conversation_id, $user_id, $message, $file_url]);
     $message_id = $pdo->lastInsertId();
 
     // 3. Update conversation last message
+    $last_msg_text = $file_url ? "📷 Image" : $message;
     $stmt = $pdo->prepare("UPDATE chat_conversations SET last_message = ? WHERE id = ?");
-    $stmt->execute([$message, $conversation_id]);
+    $stmt->execute([$last_msg_text, $conversation_id]);
 
     // 4. Generate Admin Bill for the Expert (if message was charged AND NOT A BROADCAST)
     if ($conv_type === 'private' && $sender && $sender['role'] === 'user' && isset($is_free_message) && !$is_free_message) {

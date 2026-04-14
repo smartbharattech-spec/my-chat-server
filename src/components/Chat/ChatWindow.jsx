@@ -21,8 +21,10 @@ import {
   DialogContent,
   DialogActions,
   Button,
-  Divider
+  Divider,
+  Popover
 } from '@mui/material';
+import EmojiPicker from 'emoji-picker-react';
 import { 
   Send as SendIcon, 
   Close as CloseIcon, 
@@ -39,7 +41,9 @@ import {
   Mic as MicIcon,
   MicOff as MicOffIcon,
   CallEnd as CallEndIcon,
-  VideocamOff as VideocamOffIcon
+  VideocamOff as VideocamOffIcon,
+  Edit as EditIcon,
+  Download as DownloadIcon
 } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useChat } from '../../contexts/ChatContext';
@@ -83,10 +87,49 @@ const ChatWindow = ({ onClose, onBack, currentUser }) => {
     isCallMuted,
     isVideoOff,
     localCallStream,
-    remoteCallStream
+    remoteCallStream,
+    updateConversationTitle,
+    sendFile
   } = useChat();
   
   const [inputValue, setInputValue] = useState('');
+  const [isEditingTitle, setIsEditingTitle] = useState(false);
+  const [newTitle, setNewTitle] = useState('');
+  const [emojiAnchorEl, setEmojiAnchorEl] = useState(null);
+  const [zoomedImage, setZoomedImage] = useState(null);
+  const fileInputRef = useRef(null);
+
+  // Handle Title Update
+  const handleTitleUpdate = () => {
+    if (!newTitle.trim()) return;
+    updateConversationTitle(activeConversation.id, newTitle);
+    setIsEditingTitle(false);
+  };
+
+  const handleDownloadImage = (url) => {
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = url.split('/').pop();
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleEmojiClick = (emojiData) => {
+    setInputValue(prev => prev + emojiData.emoji);
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      sendFile(file);
+    }
+  };
+
+  const isExpertOfGroup = activeConversation?.type === 'broadcast' && 
+                          currentUser?.role === 'expert' && 
+                          String(currentUser?.id || currentUser?.user_id) === String(activeConversation?.expert_id);
+  
   const [isRemoteVideoPlaying, setIsRemoteVideoPlaying] = useState(false);
   const [isLocalVideoPlaying, setIsLocalVideoPlaying] = useState(false);
   
@@ -390,9 +433,23 @@ const ChatWindow = ({ onClose, onBack, currentUser }) => {
               </Avatar>
             </Badge>
             <Box sx={{ ml: 1.5 }}>
-              <Typography variant="h6" sx={{ fontWeight: 700, lineHeight: 1.1, fontSize: '0.95rem' }}>
-                {activeConversation?.type === 'broadcast' ? activeConversation.title : (activeConversation?.other_party_name || "Expert Support")}
-              </Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Typography variant="h6" sx={{ fontWeight: 700, lineHeight: 1.1, fontSize: '0.95rem' }}>
+                  {activeConversation?.type === 'broadcast' ? activeConversation.title : (activeConversation?.other_party_name || "Expert Support")}
+                </Typography>
+                {isExpertOfGroup && (
+                  <IconButton 
+                    size="small" 
+                    onClick={() => {
+                        setNewTitle(activeConversation.title);
+                        setIsEditingTitle(true);
+                    }} 
+                    sx={{ color: 'rgba(255,255,255,0.7)', p: 0.2, '&:hover': { color: 'white', bgcolor: 'rgba(255,255,255,0.1)' } }}
+                  >
+                    <EditIcon sx={{ fontSize: '0.9rem' }} />
+                  </IconButton>
+                )}
+              </Box>
               <Typography variant="caption" sx={{ opacity: 0.9, fontWeight: 500, fontSize: '0.7rem' }}>
                 {activeConversation?.type === 'broadcast' ? 'Broadcast Channel' : (isTyping ? 'Typing...' : 'Live Chat')}
               </Typography>
@@ -438,6 +495,24 @@ const ChatWindow = ({ onClose, onBack, currentUser }) => {
                       </Typography>
                   )}
                   <Typography variant="body2">{msg.message}</Typography>
+                  
+                  {msg.file_path && (
+                      <Box sx={{ mt: 1, position: 'relative' }}>
+                          <img 
+                            src={msg.file_path} 
+                            alt="Chat Attachment" 
+                            style={{ 
+                                maxWidth: '100%', 
+                                maxHeight: '300px', 
+                                borderRadius: '12px', 
+                                display: 'block', 
+                                cursor: 'pointer',
+                                border: '1px solid rgba(0,0,0,0.1)'
+                            }} 
+                            onClick={() => setZoomedImage(msg.file_path)}
+                          />
+                      </Box>
+                  )}
                   
                   {/* Join buttons for different call types */}
                   {msg.message.includes('💻') && !isMe && (
@@ -494,12 +569,42 @@ const ChatWindow = ({ onClose, onBack, currentUser }) => {
                 </Typography>
             </Box>
         ) : (
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, bgcolor: '#f1f5f9', p: '2px 8px', borderRadius: 10 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, bgcolor: '#f1f5f9', p: '4px 12px', borderRadius: 10 }}>
+                {/* Hidden File Input */}
+                <input
+                    type="file"
+                    hidden
+                    ref={fileInputRef}
+                    onChange={handleFileChange}
+                    accept="image/*,application/pdf"
+                />
+
+                <Tooltip title="Add Emoji">
+                    <IconButton 
+                        size="small" 
+                        onClick={(e) => setEmojiAnchorEl(e.currentTarget)} 
+                        sx={{ color: '#64748b' }}
+                    >
+                        <EmojiIcon fontSize="small" />
+                    </IconButton>
+                </Tooltip>
+
+                <Tooltip title="Send Image">
+                    <IconButton 
+                        size="small" 
+                        onClick={() => fileInputRef.current.click()} 
+                        sx={{ color: '#64748b' }}
+                    >
+                        <ImageIcon fontSize="small" />
+                    </IconButton>
+                </Tooltip>
+
+                <Divider orientation="vertical" flexItem sx={{ mx: 0.5, my: 1 }} />
+
                 {activeConversation?.type !== 'broadcast' && (
                     <>
                         <Tooltip title="Audio Call"><IconButton size="small" onClick={startAudioCall} sx={{ color: '#8b5cf6' }}><CallIcon fontSize="small" /></IconButton></Tooltip>
                         <Tooltip title="Video Call"><IconButton size="small" onClick={startVideoCall} sx={{ color: '#8b5cf6' }}><VideocamIcon fontSize="small" /></IconButton></Tooltip>
-                        <Tooltip title="Share Screen"><IconButton size="small" onClick={startScreenShare} sx={{ color: '#10b981' }}><ScreenShareIcon fontSize="small" /></IconButton></Tooltip>
                     </>
                 )}
                 <TextField 
@@ -511,13 +616,80 @@ const ChatWindow = ({ onClose, onBack, currentUser }) => {
                     onKeyPress={handleKeyPress}
                     InputProps={{ disableUnderline: true, sx: { px: 1, fontSize: '0.9rem' } }}
                 />
-                <IconButton onClick={handleSend} disabled={!inputValue.trim()} sx={{ color: '#8b5cf6' }}><SendIcon /></IconButton>
+                <IconButton onClick={handleSend} disabled={!inputValue.trim()} sx={{ color: '#8b5cf6', transition: 'all 0.2s', '&:hover': { transform: 'scale(1.1)' } }}><SendIcon /></IconButton>
             </Box>
         )}
       </Box>
 
+      {/* Emoji Popover */}
+      <Popover
+        open={Boolean(emojiAnchorEl)}
+        anchorEl={emojiAnchorEl}
+        onClose={() => setEmojiAnchorEl(null)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+        transformOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        PaperProps={{ sx: { borderRadius: 3, boxShadow: '0 10px 40px rgba(0,0,0,0.15)', border: 'none', mt: -1 } }}
+      >
+        <EmojiPicker onEmojiClick={handleEmojiClick} />
+      </Popover>
+
       {/* Render Screen Share via Portal (Breaks out of container) */}
       <ScreenSharePortal />
+
+      {/* Rename Dialog */}
+      <Dialog open={isEditingTitle} onClose={() => setIsEditingTitle(false)}>
+        <DialogTitle sx={{ fontWeight: 800 }}>Rename Group</DialogTitle>
+        <DialogContent>
+            <Typography variant="caption" color="text.secondary" sx={{ mb: 2, display: 'block' }}>
+                Enter a new name for your community broadcast channel.
+            </Typography>
+            <TextField
+                fullWidth
+                autoFocus
+                size="small"
+                label="Group Name"
+                value={newTitle}
+                onChange={(e) => setNewTitle(e.target.value)}
+                sx={{ mt: 1 }}
+            />
+        </DialogContent>
+        <DialogActions sx={{ p: 2, pt: 0 }}>
+            <Button onClick={() => setIsEditingTitle(false)} color="inherit">Cancel</Button>
+            <Button onClick={handleTitleUpdate} variant="contained" disabled={!newTitle.trim()} sx={{ bgcolor: '#8b5cf6', '&:hover': { bgcolor: '#7c3aed' } }}>
+                Update Name
+            </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Image Zoom Dialog */}
+      <Dialog 
+        open={Boolean(zoomedImage)} 
+        onClose={() => setZoomedImage(null)}
+        maxWidth="lg"
+        PaperProps={{ sx: { bgcolor: 'transparent', boxShadow: 'none', overflow: 'visible' } }}
+      >
+        <Box sx={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <IconButton 
+                onClick={() => setZoomedImage(null)}
+                sx={{ position: 'absolute', top: -40, right: 0, color: 'white' }}
+            >
+                <CloseIcon />
+            </IconButton>
+            <img 
+                src={zoomedImage} 
+                alt="Zoomed attachment" 
+                style={{ maxWidth: '95vw', maxHeight: '80vh', borderRadius: '12px', boxShadow: '0 20px 50px rgba(0,0,0,0.5)' }} 
+            />
+            <Button 
+                variant="contained" 
+                startIcon={<DownloadIcon />}
+                onClick={() => handleDownloadImage(zoomedImage)}
+                sx={{ mt: 2, bgcolor: 'white', color: '#1e293b', fontWeight: 700, '&:hover': { bgcolor: '#f1f5f9' } }}
+            >
+                Download
+            </Button>
+        </Box>
+      </Dialog>
 
     </Paper>
   );

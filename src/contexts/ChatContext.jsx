@@ -265,6 +265,21 @@ export const ChatProvider = ({ children, currentUser }) => {
         }
       });
 
+      newSocket.on('request_call_offer', (data) => {
+        if (String(data.receiverId) === String(currentId)) {
+          console.log("[CALL] Received request_call_offer. Re-sending offer...");
+          if (callPcRef.current && callPcRef.current.localDescription) {
+            newSocket.emit('call_offer', {
+              offer: callPcRef.current.localDescription,
+              receiverId: String(data.senderId),
+              senderId: String(currentId),
+              callType: isVideoCallActive ? 'video' : 'audio',
+              callerName: currentUser?.name || 'Expert'
+            });
+          }
+        }
+      });
+
       fetchConversations();
       return () => newSocket.close();
     }
@@ -335,8 +350,8 @@ export const ChatProvider = ({ children, currentUser }) => {
     }
   };
 
-  const sendMessage = async (messageText, expertId = null) => {
-    if (!messageText.trim()) return;
+  const sendMessage = async (messageText, fileUrl = null, expertId = null) => {
+    if (!messageText.trim() && !fileUrl) return;
 
     try {
       if (!currentUser) {
@@ -347,7 +362,8 @@ export const ChatProvider = ({ children, currentUser }) => {
       const currentId = currentUser.id || currentUser.user_id;
       const payload = {
         user_id: currentId,
-        message: messageText
+        message: messageText,
+        file_url: fileUrl
       };
 
       if (activeConversation) {
@@ -384,6 +400,7 @@ export const ChatProvider = ({ children, currentUser }) => {
           conversation_id: result.data.conversation_id,
           sender_id: currentId,
           message: messageText,
+          file_path: fileUrl,
           created_at: result.data.created_at
         };
 
@@ -423,6 +440,50 @@ export const ChatProvider = ({ children, currentUser }) => {
     }
   };
 
+  const sendFile = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await fetch("/api/marketplace/chat_upload_file.php", {
+        method: 'POST',
+        body: formData
+      });
+      const result = await response.json();
+      if (result.status === 'success') {
+        await sendMessage("", result.data.file_url);
+      } else {
+        showToast(result.message || "Failed to upload file", "error");
+      }
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      showToast("Upload failed", "error");
+    }
+  };
+
+  const updateConversationTitle = async (conversationId, newTitle) => {
+    const currentId = currentUser?.id || currentUser?.user_id;
+    try {
+      const response = await fetch("/api/marketplace/chat_update_conversation.php", {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ conversation_id: conversationId, user_id: currentId, title: newTitle })
+      });
+      const result = await response.json();
+      if (result.status === 'success') {
+        showToast("Group renamed successfully!", "success");
+        if (activeConversation?.id === conversationId) {
+          setActiveConversation(prev => ({ ...prev, title: newTitle }));
+        }
+        fetchConversations();
+      } else {
+        showToast(result.message || "Failed to rename group", "error");
+      }
+    } catch (error) {
+      console.error('Error updating conversation title:', error);
+    }
+  };
+  
   const handleTyping = (isTypingStatus) => {
     if (!activeConversation || !socket) return;
     const receiverId = activeConversation.user_id === currentUser.id ? activeConversation.expert_id : activeConversation.user_id;
@@ -836,7 +897,16 @@ export const ChatProvider = ({ children, currentUser }) => {
   const acceptCall = async () => {
     stopTitleBlink();
     if (!callPendingOffer.current) {
-      showToast("No active call found. It may have already ended.", "warning");
+      if (socket && activeConversation) {
+        const receiverId = activeConversation.user_id === currentId ? activeConversation.expert_id : activeConversation.user_id;
+        socket.emit('request_call_offer', {
+          receiverId: String(receiverId),
+          senderId: String(currentId)
+        });
+        showToast("Requesting to join call... please wait.", "info");
+      } else {
+        showToast("No active call found. It may have already ended.", "warning");
+      }
       return;
     }
     const { offer, senderId } = callPendingOffer.current;
@@ -948,10 +1018,12 @@ export const ChatProvider = ({ children, currentUser }) => {
       setActiveConversation,
       messages,
       sendMessage,
+      sendFile,
       unreadCount,
       isTyping,
       handleTyping,
       fetchConversations,
+      updateConversationTitle,
       onlineUsers,
       socket,
       notifyNewProblem,
