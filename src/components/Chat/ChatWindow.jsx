@@ -38,6 +38,7 @@ import {
   Stop as StopIcon,
   Call as CallIcon,
   Videocam as VideocamIcon,
+  Link as LinkIcon,
   Mic as MicIcon,
   MicOff as MicOffIcon,
   CallEnd as CallEndIcon,
@@ -456,7 +457,20 @@ const ChatWindow = ({ onClose, onBack, currentUser }) => {
             </Box>
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', gap: 0.5 }}>
+        <Box sx={{ display: 'flex', gap: 0.5, alignItems: 'center' }}>
+          <Tooltip title="Copy Invite Link">
+            <IconButton 
+              size="small" 
+              onClick={() => {
+                const link = generateInviteLink('video');
+                navigator.clipboard.writeText(link);
+                showToast("Invite link copied!", "success");
+              }} 
+              sx={{ color: 'white', bgcolor: 'rgba(255,255,255,0.1)', '&:hover': { bgcolor: 'rgba(255,255,255,0.25)' }, width: 32, height: 32, mr: 0.5 }}
+            >
+              <LinkIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
           {activeConversation?.type !== 'broadcast' && (
             <>
               <Tooltip title="Audio Call">

@@ -191,11 +191,23 @@ export const ChatProvider = ({ children, currentUser }) => {
 
       // ─── Video/Audio Call Signaling ───────────────────────────────────
         newSocket.on('call_offer', async (data) => {
-          if (String(data.receiverId) !== String(currentId)) return;
+          console.log("[CALL-OFFER] Received:", { 
+            receiverId: data.receiverId, 
+            currentId: currentId, 
+            isBroadcast: data.isBroadcast,
+            senderId: data.senderId 
+          });
+
+          if (String(data.receiverId) !== String(currentId) && !data.isBroadcast) {
+            console.log("[CALL-OFFER] ID Mismatch. Ignoring.");
+            return;
+          }
+
+          console.log("[CALL-OFFER] Processing offer from:", data.senderId);
           callPendingOffer.current = { offer: data.offer, senderId: data.senderId };
           setCallType(data.callType);
           setCallerId(data.senderId);
-          setCallerName(data.callerName || 'Unknown');
+          setCallerName(data.callerName || 'Someone');
           
           if (data.callType === 'video') setIsVideoCallIncoming(true);
           else setIsAudioCallIncoming(true);
@@ -275,16 +287,20 @@ export const ChatProvider = ({ children, currentUser }) => {
       });
 
       newSocket.on('request_call_offer', (data) => {
+        console.log("[CALL] Received request_call_offer from:", data.senderId, "Targeting:", data.receiverId);
         if (String(data.receiverId) === String(currentId)) {
-          console.log("[CALL] Received request_call_offer. Re-sending offer...");
+          console.log("[CALL] Re-sending offer because call is active...");
           if (callPcRef.current && callPcRef.current.localDescription) {
             newSocket.emit('call_offer', {
               offer: callPcRef.current.localDescription,
               receiverId: String(data.senderId),
               senderId: String(currentId),
               callType: isVideoCallActive ? 'video' : 'audio',
-              callerName: currentUser?.name || 'Expert'
+              callerName: currentUser?.name || 'Expert',
+              isBroadcast: isVideoCallActive || isAudioCallActive // Keep broadcast context
             });
+          } else {
+            console.warn("[CALL] request_call_offer ignored: No local active call found.");
           }
         }
       });
@@ -1032,6 +1048,40 @@ export const ChatProvider = ({ children, currentUser }) => {
     }
   };
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const chatId = params.get('openChat');
+    const callMode = params.get('call');
+    
+    if (chatId && conversations.length > 0) {
+      const conv = conversations.find(c => String(c.id) === String(chatId));
+      if (conv) {
+        setActiveConversation(conv);
+        setIsChatOpen(true);
+        if (callMode === 'video' || callMode === 'audio') {
+          setTimeout(() => {
+            isAutoAcceptingCall.current = true;
+            if (socket) {
+              const receiverId = conv.type === 'broadcast' ? conv.expert_id : (String(conv.user_id) === String(currentId) ? conv.expert_id : conv.user_id);
+              socket.emit('request_call_offer', {
+                receiverId: String(receiverId),
+                senderId: String(currentId),
+                isBroadcast: conv.type === 'broadcast'
+              });
+            }
+          }, 2000);
+        }
+        window.history.replaceState({}, '', window.location.pathname);
+      }
+    }
+  }, [conversations, socket]);
+
+  const generateInviteLink = (type = 'video') => {
+    if (!activeConversation) return "";
+    const baseUrl = window.location.origin + window.location.pathname;
+    return `${baseUrl}?openChat=${activeConversation.id}&call=${type}`;
+  };
+
   return (
     <ChatContext.Provider value={{
       conversations,
@@ -1085,7 +1135,8 @@ export const ChatProvider = ({ children, currentUser }) => {
       isCallMuted,
       isVideoOff,
       localCallStream,
-      remoteCallStream
+      remoteCallStream,
+      generateInviteLink
     }}>
       {children}
     </ChatContext.Provider>
